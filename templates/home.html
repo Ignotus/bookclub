@@ -1,0 +1,93 @@
+{# home.html #}
+{% extends "base.html" %}
+{% block body %}
+
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/home">Exclusive Book Club</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+<!--            <li><a href="#about">About</a></li> -->
+<!--            <li><a href="#contact">Contact</a></li> -->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="jumbotron">
+        <h1>Зараз читаємо</h1>
+        <p class="lead">
+          <div class="row">
+            <div class="col-md-4"><img src="{{ last_book.img }}" class="img-thumbnail"></div>
+            <div class="col-md-8">
+              <h2>{{ last_book.book_author }} - {{ last_book.book_name }}</h2> <br />
+              {{ last_book.description }}
+            </div>
+          </div>
+
+          <div class="row starter-template">
+          <div id="message"></div>
+<form class="form-inline" method="POST" id="myform" role="form" action="/update_progress">
+
+            <input type="hidden" name="book_id" value={{last_book.id}}>
+
+            <h1>Я прочитав <input type="text" name="progress" size=2 class="form-control" value=" {% if last_progress_info is defined %} {{ last_progress_info.progress }} {% else %} 0 {% endif %} "> % </h1>
+
+            <button type="submit" class="btn btn-default">Відновити дані</button>
+            </form>
+
+<div id="response"></div>
+
+        <script>
+            $(function() {
+              $("#myform").on("submit", function(e) {
+                e.preventDefault();
+                $.ajax({
+                  url: $(this).attr("action"),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    beforeSend: function() {
+                      $("#message").html("sending...");
+                    },
+                    success: function(data) {
+                      $("#message").hide();
+                      $("#response").html(data);
+                    }
+                });
+              });
+        });
+        </script>
+
+          </div>
+        </p>
+      </div>
+
+      <div>
+        {% for item in last_items %}
+          <h3>{{item.name}} прочитав {{item.progress}} % книги</h3>
+        {% endfor %}
+      </div>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+{% endblock %}
