@@ -53,7 +53,6 @@ class Progress(db.Model):
       self.name = name
       self.progress = progress
 
-
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -126,7 +125,6 @@ def update_progress():
     db.session.commit()
     return "OK"
     
-
 @app.route('/home')
 @login_required
 def home():
@@ -143,7 +141,6 @@ def home():
       return render_template('home.html', last_book = last_book, last_progress_info=last_progress_info, last_items=last_items) 
     else:
       return render_template('home.html', last_book=last_book, last_items=last_items)
-
 
 @app.route('/login/authorized')
 @facebook.authorized_handler
