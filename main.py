@@ -130,7 +130,6 @@ def update_progress():
 @app.route('/home')
 @login_required
 def home():
-
     last_book = db.session.query(Books).order_by(Books.id.desc()).first()
 
     current_user = User.query.filter_by(id=session["user_id"]).first()
