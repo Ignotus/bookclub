@@ -1,9 +1,54 @@
-from flask import Flask, redirect, url_for, session, request
+from flask import Flask, redirect, url_for, session, request, render_template
+
+from flask.ext.sqlalchemy import SQLAlchemy
+
+from flask_login import LoginManager
+from flask.ext.login import login_required, login_user
+
 from flask_oauth import OAuth
+
+from config import *
 
 app = Flask(__name__)
 app.debug = DEBUG
 app.secret_key = SECRET_KEY
+
+
+### SQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ignotus/bookclub/bookclub.db'
+db = SQLAlchemy(app)
+
+with app.app_context():
+    db.create_all()
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, unique=True)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+ 
+    def __init__(self, email, first_name=None, last_name=None):
+        self.email = email.lower()
+        self.first_name = first_name
+        self.last_name = last_name
+ 
+    # These four methods are for Flask-Login
+    def is_authenticated(self):
+        return True
+ 
+    def is_active(self):
+        return True
+ 
+    def is_anonymous(self):
+        return False
+ 
+    def get_id(self):
+        return unicode(self.id)
+
+
+
+### OAuth Settings
 oauth = OAuth()
 
 facebook = oauth.remote_app('facebook',
@@ -16,42 +61,57 @@ facebook = oauth.remote_app('facebook',
     request_token_params={'scope': 'email'}
 )
 
+### Login manager settings
+login_manager = LoginManager()
+login_manager.init_app(app)
 
+@login_manager.user_loader
+def load_user(userid):
+    user = User.query.get(int(userid))
+    if user:
+        return user
+
+
+### Routes
 @app.route('/')
-def index():
-    return redirect(url_for('login'))
-
-@app.route('/login')
-def login():
+def main():
+    next_url = request.args.get('next') or url_for('home')
     return facebook.authorize(callback=url_for('facebook_authorized',
-        next=request.args.get('next') or request.referrer or None,
+        next=next_url,
         _external=True))
+
+
+@app.route('/home')
+@login_required
+def home():
+  return ''
 
 
 @app.route('/login/authorized')
 @facebook.authorized_handler
 def facebook_authorized(resp):
+    next_url = request.args.get('next') or url_for('home')
     if resp is None:
-        return 'Access denied: reason=%s error=%s' % (
-            request.args['error_reason'],
-            request.args['error_description']
-        )
+        # The user likely denied the request
+        flash(u'There was a problem logging in.')
+        return redirect(next_url)
     session['oauth_token'] = (resp['access_token'], '')
-    me = facebook.get('/me')
-    return 'Logged in as id=%s name=%s redirect=%s' % \
-        (me.data['id'], me.data['name'], request.args.get('next'))
+    user_data = facebook.get('/me').data
+    user = User.query.filter(User.email == user_data['email']).first()
+    if user is None:
+        new_user = User(email=user_data['email'], first_name=user_data['first_name'], last_name=user_data['last_name'])
+        db.session.add(new_user)
+        db.session.commit()
+        login_user(new_user)
+    else:
+        login_user(user)
+    return redirect(next_url)
 
-@app.route('/page')
-@facebook.authorized_handler
-def page(resp):
-  if resp is None:
-      return 'FAIL'
-
-  return 'OK'
 
 @facebook.tokengetter
 def get_facebook_oauth_token():
     return session.get('oauth_token')
+
 
 if __name__ == '__main__':
     app.run(host=HOST,port=PORT)
