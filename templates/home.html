@@ -5,6 +5,9 @@
 {% include "header.html" %}
 <div class="container">
     <div class="jumbotron">
+        {% if current_book is none %}
+        <div class="page-header"><h1>Зараз не читаємо книг :(</h1></div>
+        {% else %}
         <div class="page-header"><h1>Зараз читаємо</h1></div>
         <p class="lead">
         <div class="row">
@@ -67,6 +70,7 @@
             </script>
         </div>
         </p>
+        {% endif %}
     </div>
 
 </div><!-- /.container -->

@@ -6,43 +6,42 @@
 <script src="http://d3js.org/d3.v3.js"></script>
 <script src="http://nvd3.org/assets/js/nv.d3.js"></script>
 <div class="container">
-    <div id='chart'>
-        <svg style='height:500px; width:1000px;'> </svg>
+    <div class="main">
+        <div class="page-header"><h1>{{ book.book_author }} - {{ book.book_name }}</h1></div>
+
+        <div id='chart'>
+            <svg style='height:500px; width:1000px;'> </svg>
+        </div>
+        <script>
+            d3.json('/progress/data/{{ book.id }}', function(data) {
+              nv.addGraph(function() {
+                var chart = nv.models.cumulativeLineChart()
+                              .x(function(d) { return d[0] })
+                              .y(function(d) { return d[1]/100 }) //adjusting, 100% is 1.00, not 100 as it is in the data
+                              .color(d3.scale.category10().range())
+                              .showControls(false)
+                              ;
+
+                 chart.xAxis
+                    .tickFormat(function(d) {
+                        return d3.time.format('%x')(new Date(d))
+                      });
+
+                chart.yAxis
+                    .tickFormat(d3.format(',.1%'));
+
+                d3.select('#chart svg')
+                    .datum(data)
+                    .call(chart);
+
+                //TODO: Figure out a good way to do this automatically
+                nv.utils.windowResize(chart.update);
+
+                return chart;
+              });
+            });
+        </script>
     </div>
-    <script>
-        d3.json('/progress/data', function(data) {
-          nv.addGraph(function() {
-            var chart = nv.models.cumulativeLineChart()
-                          .x(function(d) { return d[0] })
-                          .y(function(d) { return d[1]/100 }) //adjusting, 100% is 1.00, not 100 as it is in the data
-                          .color(d3.scale.category10().range())
-                          .showControls(false)
-                          ;
-
-             chart.xAxis
-                .tickFormat(function(d) {
-                    return d3.time.format('%x')(new Date(d))
-                  });
-
-            chart.yAxis
-                .tickFormat(d3.format(',.1%'));
-
-            d3.select('#chart svg')
-                .datum(data)
-                .call(chart);
-
-            //TODO: Figure out a good way to do this automatically
-            nv.utils.windowResize(chart.update);
-
-            return chart;
-          });
-        });
-    </script>
 </div><!-- /.container -->
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 {% endblock %}

@@ -6,6 +6,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ignotus/bookclub/bookcl
 db = SQLAlchemy(app)
 
 
+class Common(db.Model):
+    __tablename__ = 'common'
+    id = db.Column(db.INTEGER, primary_key=True)
+    key = db.Column(db.String, unique=True)
+    value = db.Column(db.String)
+
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+
+
 class Books(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.INTEGER, primary_key=True)
@@ -13,12 +24,14 @@ class Books(db.Model):
     book_author = db.Column(db.String)
     img = db.Column(db.String)
     description = db.Column(db.String)
+    url = db.Column(db.String)
 
-    def __init__(self, book_name, book_author, description, img=None):
+    def __init__(self, book_name, book_author, description, img, url):
         self.book_name = book_name
         self.book_author = book_author
         self.img = img
         self.description = description
+        self.url = url
 
 
 class Progress(db.Model):
@@ -34,6 +47,21 @@ class Progress(db.Model):
         self.book_id = book_id
         self.user_id = user_id
         self.progress = progress
+
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.INTEGER, primary_key=True)
+    timestamp = db.Column(db.DateTime)
+    book_id = db.Column(db.INTEGER)
+    user_id = db.Column(db.INTEGER)
+    comment = db.Column(db.String)
+
+    def __init__(self, timestamp, book_id, user_id, comment):
+        self.timestamp = timestamp
+        self.book_id = book_id
+        self.user_id = user_id
+        self.comment = comment
 
 
 class User(db.Model):

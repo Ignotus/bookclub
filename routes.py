@@ -32,38 +32,123 @@ def update_progress():
 @app.route('/books')
 @login_required
 def books():
-    return "Not implemented yet"
+    books_info = db.session.query(Books).all()
+    return render_template('books.html', books=books_info)
 
 
-@app.route('/progress/data')
+@app.route('/books/read/<id>')
 @login_required
-def progress_data_handler():
+def book_read(id):
+    current_book = Common.query.filter_by(key="current_book").first()
+    if current_book is None:
+        db.session.add(Common("current_book", str(id)))
+    else:
+        current_book.value = str(id)
+
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
+@app.route('/books/add/submit', methods=['POST'])
+@login_required
+def books_add_submit():
+    msg = dict()
+    if not ('author' in request.form and 'name' in request.form
+            and 'img' in request.form and 'url' in request.form
+            and 'description' in request.form):
+        msg = dict(type='error', message='please fill all fields')
+    else:
+        db.session.add(Books(request.form['name'], request.form['author'], request.form['description'],
+                             request.form['img'], request.form['url']))
+        db.session.commit()
+        msg = dict(type='ok')
+
+    return render_template('progress_data.html', data=msg)
+
+@app.route('/books/add')
+@login_required
+def books_add():
+    return render_template('books_add.html')
+
+
+@app.route('/books/edit/<id>')
+@login_required
+def books_edit(id):
+    book_data = Books.query.filter_by(id=id).first()
+    return render_template('books_add.html', book_data=book_data)
+
+
+@app.route('/books/delete/<id>')
+@login_required
+def books_delete(id):
+    db.session.delete(Books.query.filter_by(id=id).first())
+    db.session.commit()
+    return redirect(url_for('books'))
+
+
+@app.route('/books/update', methods=["POST"])
+@login_required
+def books_update():
+    msg = dict()
+    if not ('author' in request.form and 'name' in request.form
+            and 'img' in request.form and 'url' in request.form
+            and 'description' in request.form):
+        msg = dict(type='error', message='please fill all fields')
+    else:
+        item = Books.query.filter_by(id=request.form['id']).first()
+        item.book_name = request.form['name']
+        item.book_author = request.form['author']
+        item.description = request.form['description']
+        item.img = request.form['img']
+        item.url = request.form['url']
+        db.session.commit()
+        msg = dict(type='ok')
+
+    return render_template('progress_data.html', data=msg)
+
+
+def render_progress(book):
     progress_data = []
-    current_book = get_current_book()
+    if book is None:
+        return render_template('progress_data.html', progress_data=progress_data)
+
     for user in User.query.all():
         progress_data_element = dict(key=user.first_name)
         progress_data_element["values"] = []
 
-        for prog in Progress.query.filter_by(book_id=current_book.id).filter_by(user_id=user.id).all():
+        for prog in Progress.query.filter_by(book_id=book.id).filter_by(user_id=user.id).all():
             progress_data_element["values"] += [[int(1000 * (prog.timestamp - datetime.datetime(1970, 1, 1)).total_seconds()),
                                                  prog.progress]]
 
         if len(progress_data_element["values"]) != 0:
             progress_data += [progress_data_element]
 
-    return render_template('progress_data.html', progress_data=progress_data)
+    return render_template('progress_data.html', data=progress_data, book=book)
+
+
+@app.route('/progress/data/<id>')
+@login_required
+def progress_book_handler(id):
+    return render_progress(db.session.query(Books).filter_by(id=id).first())
+
+
+@app.route('/progress/book/<id>')
+@login_required
+def progress_data_handler(id):
+    return render_template('progress.html', book=db.session.query(Books).filter_by(id=id).first())
 
 
 @app.route('/progress')
 @login_required
 def progress():
-    return render_template('progress.html')
+    return render_template('progress.html', book=get_current_book())
 
 
 @app.route('/calendar')
 @login_required
 def calendar():
     return render_template('calendar.html')
+
 
 @app.route('/home')
 @login_required
@@ -72,7 +157,7 @@ def home():
 
     last_progress_info = db.session.query(Progress).filter_by(book_id=current_book.id) \
         .filter_by(user_id=current_user.id) \
-        .order_by(Progress.id.desc()).first()
+        .order_by(Progress.id.desc()).first() if current_book is not None else None
 
     return render_template('home.html',
                            current_user=current_user,
