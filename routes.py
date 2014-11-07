@@ -6,7 +6,7 @@ from flask.ext.login import login_required, login_user, current_user
 from auth import *
 from utils import get_current_book
 
-### Routes
+
 @app.route('/')
 def main():
     if current_user.is_authenticated():
@@ -28,20 +28,31 @@ def update_progress():
     db.session.commit()
     return "OK"
 
-@app.route('/progress')
+
+@app.route('/progress/data')
 @login_required
-def progress():
+def progress_data_handler():
     progress_data = []
     current_book = get_current_book()
     for user in User.query.all():
-        progress_data_element = {}
-        progress_data_element["key"] = user.first_name
+        progress_data_element = dict(key=user.first_name)
         progress_data_element["values"] = []
-        #for progress in Progress.query.filter_by(book_id=current_book.id).filter_by(user_id=user.id).all():
-        #    progress_data_element["values"] += [[(progress.timestamp - datetime.datetime(1970, 1, 1)).total_seconds() , progress.progress]]
-        progress_data += progress_data_element
 
-    return render_template('progress.html', progress_data=progress_data)
+        for prog in Progress.query.filter_by(book_id=current_book.id).filter_by(user_id=user.id).all():
+            progress_data_element["values"] += [[int(1000 * (prog.timestamp - datetime.datetime(1970, 1, 1)).total_seconds()),
+                                                 prog.progress]]
+
+        if len(progress_data_element["values"]) != 0:
+            progress_data += [progress_data_element]
+
+    return render_template('progress_data.html', progress_data=progress_data)
+
+
+@app.route('/progress')
+@login_required
+def progress():
+    return render_template('progress.html')
+
 
 @app.route('/calendar')
 @login_required
