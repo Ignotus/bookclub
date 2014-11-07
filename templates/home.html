@@ -5,38 +5,55 @@
 {% include "header.html" %}
 <div class="container">
     <div class="jumbotron">
-        <h1>Зараз читаємо</h1>
+        <div class="page-header"><h1>Зараз читаємо</h1></div>
         <p class="lead">
         <div class="row">
+            <div class="col-md-1"></div>
             <div class="col-md-4"><img src="{{ current_book.img }}" class="img-thumbnail"></div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <h2>{{ current_book.book_author }} - {{ current_book.book_name }}</h2> <br />
                 {{ current_book.description }}
             </div>
+            <div class="col-md-1"></div>
         </div>
 
         <div class="row starter-template">
             <div id="message"></div>
-            <form class="form-inline" method="POST" id="progress-form" role="form" action="/update_progress">
+            <form class="form-inline" method="POST" id="progress-form" role="form">
                 <input type="hidden" name="book_id" value={{current_book.id}}>
                 <h1>Я прочитав
-                    <input type="text" name="progress" size=2 class="form-control" value="{% if last_progress_info is none %}0{% else %}{{ last_progress_info.progress }}{% endif %}">
+                    <div class="input-group spinner">
+                        <input type="text" name="progress" class="form-control" value="{% if last_progress_info is none %}0{% else %}{{ last_progress_info.progress }}{% endif %}">
+                        <div class="input-group-btn-vertical">
+                            <div class="btn btn-default"><i class="fa fa-caret-up"></i></div>
+                            <div class="btn btn-default"><i class="fa fa-caret-down"></i></div>
+                        </div>
+                    </div>
                     %
                 </h1>
 
-                <button type="submit" class="btn btn-default">Відновити дані</button>
+                <button type="submit" id="submit-button" class="btn btn-default">Відновити дані</button>
             </form>
 
             <div id="response"></div>
 
             <script>
+              (function ($) {
+                  $('.spinner .btn:first-of-type').on('click', function() {
+                      $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+                  });
+                  $('.spinner .btn:last-of-type').on('click', function() {
+                      $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+                  });
+              })(jQuery);
+
               $(function() {
-                $("#progress-form").on("submit", function(e) {
+                $("#submit-button").click(function(e) {
                   e.preventDefault();
                   $.ajax({
-                    url: $(this).attr("action"),
+                    url: "/progress/update",
                     type: 'POST',
-                    data: $(this).serialize(),
+                    data: $("#progress-form").serialize(),
                     beforeSend: function() {
                       $("#message").html("sending...");
                     },
@@ -53,14 +70,4 @@
     </div>
 
 </div><!-- /.container -->
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="../../dist/js/bootstrap.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
 {% endblock %}

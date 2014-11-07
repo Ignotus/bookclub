@@ -18,7 +18,7 @@ def main():
                                                _external=True))
 
 
-@app.route('/update_progress', methods=['POST'])
+@app.route('/progress/update', methods=['POST'])
 @login_required
 def update_progress():
     book_id = int(request.form['book_id'])
@@ -26,7 +26,13 @@ def update_progress():
 
     db.session.add(Progress(datetime.datetime.now(), book_id, int(current_user.id), progress))
     db.session.commit()
-    return "OK"
+    return "Weeeee, you have read " + str(progress) + "% of this book!"
+
+
+@app.route('/books')
+@login_required
+def books():
+    return "Not implemented yet"
 
 
 @app.route('/progress/data')
