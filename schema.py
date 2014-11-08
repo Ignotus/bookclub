@@ -74,7 +74,9 @@ class User(db.Model):
     last_name = db.Column(db.String)
 
     def __init__(self, first_name=None, last_name=None, email=None):
-        self.email = email.lower()
+        if email is not None:
+            self.email = email.lower()
+            
         self.first_name = first_name
         self.last_name = last_name
 

@@ -215,7 +215,11 @@ def facebook_authorized(resp):
     user_data = facebook.get('/me').data
     user = User.query.filter(User.first_name == user_data['first_name'] and User.last_name == user_data['last_name']).first()
     if user is None:
-        new_user = User(first_name=user_data['first_name'], last_name=user_data['last_name'], email=user_data['email'])
+        new_user = User()
+        if 'email' in user_data:
+            new_user = User(first_name=user_data['first_name'], last_name=user_data['last_name'], email=user_data['email'])
+        else:
+            new_user = User(first_name=user_data['first_name'], last_name=user_data['last_name'])
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
