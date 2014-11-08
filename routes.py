@@ -213,9 +213,9 @@ def facebook_authorized(resp):
 
     session['oauth_token'] = (resp['access_token'], '')
     user_data = facebook.get('/me').data
-    user = User.query.filter(User.email == user_data['email']).first()
+    user = User.query.filter(User.first_name == user_data['first_name'] and User.last_name == user_data['last_name']).first()
     if user is None:
-        new_user = User(email=user_data['email'], first_name=user_data['first_name'], last_name=user_data['last_name'])
+        new_user = User(first_name=user_data['first_name'], last_name=user_data['last_name'], email=user_data['email'])
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
