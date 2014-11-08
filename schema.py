@@ -2,7 +2,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 from app import *
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ignotus/bookclub/bookclub.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + USER + ':' + PASSWORD + '@' + HOST + '/' + DB
 db = SQLAlchemy(app)
 
 
@@ -25,6 +25,7 @@ class Books(db.Model):
     img = db.Column(db.String)
     description = db.Column(db.String)
     url = db.Column(db.String)
+    comment_count = db.Column(db.INTEGER)
 
     def __init__(self, book_name, book_author, description, img, url):
         self.book_name = book_name
@@ -32,6 +33,7 @@ class Books(db.Model):
         self.img = img
         self.description = description
         self.url = url
+        self.comment_count = 0
 
 
 class Progress(db.Model):

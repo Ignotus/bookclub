@@ -94,6 +94,8 @@ def comment_submit(id):
         rx = re.compile("\s*$")
         if not rx.match(comment):
             db.session.add(Comments(datetime.datetime.now(), id, current_user.id, comment))
+            book = Books.query.filter_by(id=id).first()
+            book.comment_count += 1
             db.session.commit()
     return redirect(url_for('books_comment', id=id))
 

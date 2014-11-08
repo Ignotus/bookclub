@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Exclusive Book Club Home Page</title>
+    <link rel="shortcut icon" href="http://learn-ukrainian.org.ua/media/ua.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -16,6 +17,9 @@
 <body>
 {% block body %}{% endblock %}
 
-<center><a href="https://github.com/Ignotus/bookclub"><img src="https://pbs.twimg.com/profile_images/1008517866/python-powered-h-73x73_normal.jpg"/></a></center>
+<center style="margin-top:20px">
+    <a href="https://www.python.org/"><img src="{{ url_for('static', filename='img/python-powered.jpg') }}"/></a>
+    <a href="https://github.com/Ignotus/bookclub"><img src="{{ url_for('static', filename='img/github.jpg') }}"/></a>
+</center>
 </body>
 </html>
