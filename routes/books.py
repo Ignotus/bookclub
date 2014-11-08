@@ -2,6 +2,7 @@ import re
 import datetime
 from include import *
 
+
 @app.route('/books')
 @login_required
 def books():
@@ -40,6 +41,7 @@ def books_add_submit():
         msg = dict(type='ok')
 
     return render_template('progress_data.html', data=msg)
+
 
 @app.route('/books/add')
 @login_required

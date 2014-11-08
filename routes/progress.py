@@ -1,6 +1,7 @@
 import datetime
 from include import *
 
+
 @app.route('/progress')
 @login_required
 def progress():
