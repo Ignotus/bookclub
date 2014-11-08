@@ -2,7 +2,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 from app import *
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + USER + ':' + PASSWORD + '@' + HOST + '/' + DB
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + USER + ':' + DB_PASSWORD + '@' + DB_HOST + '/' + DB
 db = SQLAlchemy(app)
 
 
