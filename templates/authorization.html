@@ -1,0 +1,19 @@
+{# home.html #}
+{% extends "base.html" %}
+{% block body %}
+{% set active_page = "calendar" %}
+{% include "header.html" %}
+<div class="container">
+    <div class="main">
+        <form class="form" method="POST" id="progress-form" role="form" action="/login">
+            <input type="hidden" name="next" value={{next}}>
+            <div class="form-group">
+                <label>Пароль?</label>
+                <input type="text" class="form-control" name="password" placeholder="Пароль">
+
+            </div>
+            <button type="submit" id="submit-button" class="btn btn-default">OK</button>
+        </form>
+    </div>
+</div><!-- /.container -->
+{% endblock %}
