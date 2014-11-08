@@ -58,8 +58,11 @@ def books_add_submit():
             and 'description' in request.form):
         msg = dict(type='error', message='please fill all fields')
     else:
-        db.session.add(Books(request.form['name'], request.form['author'], request.form['description'],
-                             request.form['img'], request.form['url']))
+        db.session.add(Books(request.form['name'],
+                             request.form['author'],
+                             request.form['description'],
+                             request.form['img'],
+                             request.form['url']))
         db.session.commit()
         msg = dict(type='ok')
 
@@ -90,7 +93,7 @@ def books_delete(id):
 @login_required
 def comment_submit(id):
     if 'comment' in request.form:
-        comment = re.sub('<[^<]+?>', '', request.form['comment'])
+        comment = request.form['comment']
         rx = re.compile("\s*$")
         if not rx.match(comment):
             db.session.add(Comments(datetime.datetime.now(), id, current_user.id, comment))
