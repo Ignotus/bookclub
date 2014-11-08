@@ -13,7 +13,7 @@
                 <div class="col-md-4"><img src="{{ book.img }}" class="img-thumbnail"></div>
                 <div class="col-md-6"><p>{{ book.description }}</p><p><a href="{{ book.url }}">Детальніше</a></p></div>
             </div>
-            <div class="panel-footer"><a href="/books/edit/{{ book.id }}">Виправити</a> | <a href="/books/delete/{{ book.id }}">Видалити</a> | <a href="/progress/book/{{ book.id }}">Прогрес по книзі</a> | <a href="/books/comment/{{ book.id }}">Коментувати</a>  | <a href="/books/read/{{ book.id }}">Читаємо зараз цю книгу</a></div>
+            <div class="panel-footer"><a href="/books/edit/{{ book.id }}">Виправити</a> <!-- | <a href="/books/delete/{{ book.id }}">Видалити</a> --> | <a href="/progress/book/{{ book.id }}">Прогрес по книзі</a> | <a href="/books/comment/{{ book.id }}">Коментувати</a>  | <a href="/books/read/{{ book.id }}">Читати зараз цю книгу</a></div>
         </div>
         {% endfor %}
     </div>

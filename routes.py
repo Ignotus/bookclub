@@ -1,4 +1,5 @@
 import datetime
+import re
 
 from flask import redirect, url_for, request, render_template
 from flask.ext.login import login_required, login_user, current_user
@@ -84,6 +85,29 @@ def books_delete(id):
     db.session.delete(Books.query.filter_by(id=id).first())
     db.session.commit()
     return redirect(url_for('books'))
+
+
+@app.route('/comment/submit/<id>', methods=["POST"])
+@login_required
+def comment_submit(id):
+    if 'comment' in request.form:
+        comment = re.sub('<[^<]+?>', '', request.form['comment'])
+        rx = re.compile("\s*$")
+        if not rx.match(comment):
+            db.session.add(Comments(datetime.datetime.now(), id, current_user.id, comment))
+            db.session.commit()
+    return redirect(url_for('books_comment', id=id))
+
+
+@app.route('/books/comment/<id>')
+@login_required
+def books_comment(id):
+    book = Books.query.filter_by(id=id).first()
+    comments = Comments.query.filter_by(book_id=id).all()
+
+    comment_data = [(User.query.filter_by(id=comment.user_id).first(), comment) for comment in comments]
+
+    return render_template('books_comment.html', comment_data=comment_data, book=book)
 
 
 @app.route('/books/update', methods=["POST"])
