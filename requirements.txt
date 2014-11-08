@@ -2,3 +2,4 @@ Flask
 Flask-Login
 Flask-OAuth
 Flask-SQLAlchemy
+mysql-python
