@@ -145,6 +145,9 @@ def render_progress(book):
             progress_data_element["values"] += [[int(1000 * (prog.timestamp - datetime.datetime(1970, 1, 1)).total_seconds()),
                                                  prog.progress]]
 
+        min_timestamp = min(progress_data_element["values"], key=lambda val: val[0])[0]
+        progress_data_element["values"] = [[ min_timestamp - 1000 * 24 * 60 * 60, 0 ]] + progress_data_element["values"]
+
         if len(progress_data_element["values"]) != 0:
             progress_data += [progress_data_element]
 
