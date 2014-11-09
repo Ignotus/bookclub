@@ -6,9 +6,7 @@ def login():
     next_url = request.form['next']
 
     if 'password' in request.form and request.form['password'] == PASSWORD:
-        return facebook.authorize(callback=url_for('facebook_authorized',
-                                  next=next_url,
-                                  _external=True))
+        return facebook.authorize(callback='https://' + HOST + '/login/authorized?next=%2Fhome')
     else:
         return render_template('error.html', msg="Where are you from, dude? Your password isn't correct")
 

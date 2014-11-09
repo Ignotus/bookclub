@@ -3,8 +3,8 @@
 {% block body %}
 {% set active_page = "progress" %}
 {% include "header.html" %}
-<script src="http://d3js.org/d3.v3.js"></script>
-<script src="http://nvd3.org/assets/js/nv.d3.js"></script>
+<script src="{{ url_for('static', filename='js/d3.v3.js') }}"></script>
+<script src="{{ url_for('static', filename='js/nv.d3.js') }}"></script>
 <div class="container">
     <div class="main">
         <div class="page-header"><h1>{{ book.book_author }} - {{ book.book_name }}</h1></div>
