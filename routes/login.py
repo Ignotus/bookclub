@@ -1,6 +1,5 @@
 from include import *
 
-
 @app.route('/login', methods=["POST"])
 def login():
     next_url = request.form['next']

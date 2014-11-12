@@ -8,7 +8,7 @@ def progress():
     return render_template('progress.html', book=get_current_book())
 
 
-@app.route('/progress/book/<id>')
+@app.route('/progress/book/<int:id>')
 @login_required
 def progress_data_handler(id):
     return render_template('progress.html', book=db.session.query(Books).filter_by(id=id).first())
@@ -25,7 +25,7 @@ def progress_update():
     return "Weeeee, you have read " + str(progress) + "% of this book!"
 
 
-@app.route('/progress/data/<id>')
+@app.route('/progress/data/<int:id>')
 @login_required
 def progress_book_handler(id):
     book = db.session.query(Books).filter_by(id=id).first()

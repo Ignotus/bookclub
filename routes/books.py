@@ -10,7 +10,7 @@ def books():
     return render_template('books.html', books=books_info)
 
 
-@app.route('/books/read/<id>')
+@app.route('/books/read/<int:id>')
 @login_required
 def book_read(id):
     current_book = Common.query.filter_by(key="current_book").first()
@@ -49,14 +49,14 @@ def books_add():
     return render_template('books_add.html')
 
 
-@app.route('/books/edit/<id>')
+@app.route('/books/edit/<int:id>')
 @login_required
 def books_edit(id):
     book_data = Books.query.filter_by(id=id).first()
     return render_template('books_add.html', book_data=book_data)
 
 
-@app.route('/books/delete/<id>')
+@app.route('/books/delete/<int:id>')
 @login_required
 def books_delete(id):
     db.session.delete(Books.query.filter_by(id=id).first())
@@ -64,7 +64,7 @@ def books_delete(id):
     return redirect(url_for('books'))
 
 
-@app.route('/comment/submit/<id>', methods=["POST"])
+@app.route('/comment/submit/<int:id>', methods=["POST"])
 @login_required
 def comment_submit(id):
     if 'comment' in request.form:
@@ -78,7 +78,7 @@ def comment_submit(id):
     return redirect(url_for('books_comment', id=id))
 
 
-@app.route('/books/comment/<id>')
+@app.route('/books/comment/<int:id>')
 @login_required
 def books_comment(id):
     book = Books.query.filter_by(id=id).first()
