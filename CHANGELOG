@@ -1,3 +1,7 @@
 - 11/11/2014
 
 First alpha
+
+- 12/11/2014
+
+Port all forms to flask-wtf, add type checking for routes

@@ -1,13 +1,38 @@
+from functools import wraps
+
 from include import *
+
+from flask_wtf import Form
+from wtforms import PasswordField
+from wtforms.validators import DataRequired
+
+
+class PasswordForm(Form):
+    password = PasswordField('password', validators=[DataRequired()])
+
 
 @app.route('/login', methods=["POST"])
 def login():
-    next_url = request.form['next']
-
-    if 'password' in request.form and request.form['password'] == PASSWORD:
-        return facebook.authorize(callback='https://' + HOST + '/login/authorized?next=%2Fhome')
+    form = PasswordForm()
+    if form.validate_on_submit() and form.password.data == PASSWORD:
+        return facebook.authorize(callback=PROTOCOL + '://' + HOST + '/login/authorized?next=%2Fhome')
     else:
         return render_template('error.html', msg="Where are you from, dude? Your password isn't correct")
+
+
+def check_authentication(func):
+    @wraps(func)
+    def func_wrapper():
+        if current_user.is_authenticated():
+            return func()
+
+        next_url = request.args.get('next') or url_for('home')
+
+        form = PasswordForm()
+
+        return render_template('authorization.html', next=next_url, login_form=form)
+
+    return func_wrapper
 
 
 @app.route('/login/authorized')

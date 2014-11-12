@@ -7,9 +7,6 @@
     <div class="main">
         <div class="panel panel-default">
             <div class="panel-heading">{{book.book_author}} - {{ book.book_name }} | Сторінка обговорення</div>
-            <div class="panel-body">
-                <div class="col-md-6"><p>{{ book.description }}</p></div>
-            </div>
         </div>
         {% for user, comment in comment_data %}
         <div class="panel panel-default">
@@ -20,9 +17,10 @@
         </div>
         {% endfor %}
 
-        <form class="form" method="POST" id="add-book" role="form" action="/comment/submit/{{ book.id }}">
+        <form class="form" method="POST" id="add-book" role="form" action="/books/{{ book.id }}/comment/submit">
             <div class="form-group">
-                <textarea class="form-control" id="comment" name="comment" placeholder="Комент"></textarea>
+                {{ comment_form.hidden_tag() }}
+                {{ comment_form.comment(class_='form-control', placeholder='Комент') }}
             </div>
 
             <button type="submit" id="submit-button" class="btn btn-default">Додати</button>

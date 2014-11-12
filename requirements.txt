@@ -2,4 +2,5 @@ Flask
 Flask-Login
 Flask-OAuth
 Flask-SQLAlchemy
+Flask-WTF
 mysql-python

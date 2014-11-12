@@ -6,31 +6,30 @@
 <div class="container">
     <div class="main">
         <form class="form" method="POST" id="add-book" role="form">
-            {% if book_data is defined %}
-                <input type="hidden" name="id" value={{book_data.id}}>
-            {% endif %}
+            {{ form.hidden_tag() }}
+
             <div class="form-group">
                 <label>Автор книги</label>
-                <input type="text" class="form-control" id="author" name="author" placeholder="Автор книги" {% if book_data is defined %}value="{{ book_data.book_author }}" {% endif %}>
+                {{ form.author(class_='form-control', placeholder='Автор книги') }}
             </div>
             <div class="form-group">
                 <label>Назва книги</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Назва книги" {% if book_data is defined %}value="{{ book_data.book_name }}" {% endif %}>
+                {{ form.name(class_='form-control', placeholder='Назва книги') }}
             </div>
 
             <div class="form-group">
                 <label>URL на картинку для залучення уваги :)</label>
-                <input type="text" class="form-control" id="img" name="img" placeholder="Посилання на картинку" {% if book_data is defined %}value="{{ book_data.img }}" {% endif %}>
+                {{ form.img(class_='form-control', placeholder='URL на картинку для залучення уваги :)') }}
             </div>
 
             <div class="form-group">
                 <label>URL на додаткову інформацію</label>
-                <input type="text" class="form-control" id="url" name="url" placeholder="Посилання на додаткову інформацію" {% if book_data is defined %}value="{{ book_data.url }}" {% endif %}>
+                {{ form.url(class_='form-control', placeholder='URL на додаткову інформацію') }}
             </div>
 
             <div class="form-group">
                 <label>Опис книги</label>
-                <textarea class="form-control" id="description" name="description" placeholder="Опис книги">{% if book_data is defined %}{{ book_data.description }}{% endif %}</textarea>
+                {{ form.description(class_='form-control', placeholder='Опис книги') }}
             </div>
 
             <button type="submit" id="submit-button" class="btn btn-default">{% if book_data is defined %}Відновити{% else %}Додати{% endif %}</button>
@@ -44,7 +43,7 @@
                 $("#submit-button").click(function(e) {
                   e.preventDefault();
                   $.ajax({
-                    url: "/books/{% if book_data is defined %}update{% else %}add/submit{% endif %}",
+                    url: "/books/update",
                     type: 'POST',
                     data: $("#add-book").serialize(),
                     beforeSend: function() {

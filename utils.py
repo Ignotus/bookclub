@@ -1,17 +1,5 @@
-from flask import url_for, request, render_template
-from flask_login import current_user
-
 from tables import Common, Books
 from schema import db
-
-
-def check_authentication(render_func):
-    if current_user.is_authenticated():
-        return render_func()
-
-    next_url = request.args.get('next') or url_for('home')
-
-    return render_template('authorization.html', next=next_url)
 
 
 def get_current_book():

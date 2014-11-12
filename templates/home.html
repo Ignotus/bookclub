@@ -25,12 +25,9 @@
             <form class="form-inline" method="POST" id="progress-form" role="form">
                 <input type="hidden" name="book_id" value={{current_book.id}}>
                 <h1>Я прочитав
-                    <div class="input-group spinner">
-                        <input type="text" name="progress" class="form-control" value="{% if last_progress_info is none %}0{% else %}{{ last_progress_info.progress }}{% endif %}">
-                        <div class="input-group-btn-vertical">
-                            <div class="btn btn-default"><i class="fa fa-caret-up"></i></div>
-                            <div class="btn btn-default"><i class="fa fa-caret-down"></i></div>
-                        </div>
+                    <div class="input-group">
+                        {{ form.hidden_tag() }}
+                        {{ form.progress(class_='form-control', min='0', max='100') }}
                     </div>
                     %
                 </h1>
@@ -41,15 +38,6 @@
             <div id="response"></div>
 
             <script>
-              (function ($) {
-                  $('.spinner .btn:first-of-type').on('click', function() {
-                      $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-                  });
-                  $('.spinner .btn:last-of-type').on('click', function() {
-                      $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-                  });
-              })(jQuery);
-
               $(function() {
                 $("#submit-button").click(function(e) {
                   e.preventDefault();

@@ -8,9 +8,9 @@
         <form class="form" method="POST" id="progress-form" role="form" action="/login">
             <input type="hidden" name="next" value={{next}}>
             <div class="form-group">
+                {{ login_form.hidden_tag() }}
                 <label>Пароль?</label>
-                <input type="text" class="form-control" name="password" placeholder="Пароль">
-
+                {{ login_form.password(class_='form-control') }}
             </div>
             <button type="submit" id="submit-button" class="btn btn-default">OK</button>
         </form>
