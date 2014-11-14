@@ -7,10 +7,7 @@ app = Flask(__name__)
 app.debug = DEBUG
 app.secret_key = SECRET_KEY
 
-login_manager = LoginManager()
-login_manager.init_app(app)
 
-@login_manager.unauthorized_handler
-def unauthorized():
-    # do stuff
+@app.errorhandler(401)
+def custom_401(error):
     return render_template('unauthorized.html')
