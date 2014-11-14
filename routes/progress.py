@@ -80,13 +80,15 @@ def progress_book_handler(id):
             progress_data_element["values"] += [[int(1000 * (prog.timestamp - datetime.datetime(1970, 1, 1)).total_seconds()),
                                                  prog.progress]]
 
-        try:
-            min_timestamp = min(progress_data_element["values"], key=lambda val: val[0])[0]
-            progress_data_element["values"] = [[min_timestamp - 1000 * 24 * 60 * 60, 0]] + progress_data_element["values"]
-        except ValueError:
-            pass
-
         if len(progress_data_element["values"]) != 0:
             progress_data += [progress_data_element]
+
+    try:
+        min_date = min(progress_data, key=lambda p: p["values"][0])["values"][0][0] - 1000 * 24 * 60 * 60
+    except ValueError:
+        pass
+
+    for data in progress_data:
+        data["values"] = [[min_date, 0]] + data["values"]
 
     return render_template('plain_data.html', data=progress_data, book=book)
