@@ -31,7 +31,6 @@ def home():
         form.progress.data = 0
 
     return render_template('home.html',
-                           current_user=current_user,
                            current_book=current_book,
                            form=form)
 
