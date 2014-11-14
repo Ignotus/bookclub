@@ -1,10 +1,14 @@
 from functools import wraps
 
 from include import *
+from flask_login import LoginManager
 
 from flask_wtf import Form
 from wtforms import PasswordField
 from wtforms.validators import DataRequired
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 class PasswordForm(Form):
@@ -62,3 +66,9 @@ def facebook_authorized(resp):
         login_user(user)
 
     return redirect(next_url)
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    # do stuff
+    return render_template('unauthorized.html')

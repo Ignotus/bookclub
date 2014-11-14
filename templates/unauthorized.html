@@ -1,0 +1,14 @@
+{# home.html #}
+{% extends "base.html" %}
+{% block body %}
+{% set active_page = "home" %}
+{% include "header.html" %}
+<div class="container">
+    <div class="main">
+        <h1>Unauthorized</h1>
+        <p>The server could not verify that you are authorized to access the URL requested.  You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required. бла-бла-бла</p>
+        <p>Перейдіть на це посилання для <b><a href="/home">авторизації</a></b></p>
+
+    </div>
+</div><!-- /.container -->
+{% endblock %}
