@@ -9,7 +9,7 @@
     <h3><a href="/blog/{{ post.id }}">{{ post.topic }}</a><small>[<a href="/blog/{{ post.id }}/update">Змінити</a>]</small></h3>
     <div class="panel panel-default">
         <div class="panel-body">
-            {{ post.content }}
+            {{ post.content|markdown }}
             <hr/>
             <div id="fb-root"></div>
             <script>

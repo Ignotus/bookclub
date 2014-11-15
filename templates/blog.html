@@ -19,7 +19,7 @@
         <h3><a href="/blog/{{ post.id }}">{{ post.topic }}</a></h3>
         <div class="panel panel-default">
             <div class="panel-body">
-                {{ post.content }}
+                {{ post.content|markdown }}
             </div>
             <div class="panel-footer">
                 Написав <b>{{ post.user_first_name }} {{ post.user_last_name }}</b> | {{ post.timestamp }} | Останні зміни: {{ post.last_update }}
