@@ -26,8 +26,17 @@
 
             {% if current_user.first_name %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Йоу, {{ current_user.first_name }}! Як справи?</a></li>
+                <li>
+                    <a href="#">Йоу, {{ current_user.first_name }}! Як справи?</a>
+                </li>
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
             </ul>
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/home">Аааавторизуватися</a></li>
+            </ul>   
             {% endif %}
         </div><!--/.nav-collapse -->
 

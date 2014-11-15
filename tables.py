@@ -35,6 +35,18 @@ class Comments(db.Model):
         self.comment = comment
 
 
+# It's a view
+class CommentsDetailed(db.Model):
+    __tablename__ = 'comments_detailed'
+
+    id = db.Column(db.INTEGER, primary_key=True)
+    timestamp = db.Column(db.DateTime)
+    book_id = db.Column(db.INTEGER)
+    user_first_name = db.Column(db.String)
+    user_last_name = db.Column(db.String)
+    comment = db.Column(db.String)
+
+
 class Common(db.Model):
     __tablename__ = 'common'
     id = db.Column(db.INTEGER, primary_key=True)
@@ -87,3 +99,46 @@ class User(db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
+
+class Blog(db.Model):
+    __tablename__ = 'blog'
+    id = db.Column(db.INTEGER, primary_key=True)
+    timestamp = db.Column(db.DateTime)
+    last_update = db.Column(db.DateTime)
+    user_id = db.Column(db.INTEGER)
+    topic = db.Column(db.String)
+    content = db.Column(db.String)
+    tags = db.Column(db.String)
+
+    def __init__(self, timestamp, user_id, topic, content, tags):
+        self.timestamp = timestamp
+        self.last_update = timestamp
+        self.user_id = user_id
+        self.topic = topic
+        self.content = content
+        self.tags = tags
+
+
+# It's a view
+class BlogDetailed(db.Model):
+    __tablename__ = 'blog_detailed'
+    id = db.Column(db.INTEGER, primary_key=True)
+    timestamp = db.Column(db.DateTime)
+    last_update = db.Column(db.DateTime)
+    user_first_name = db.Column(db.String)
+    user_last_name =  db.Column(db.String)
+    topic = db.Column(db.String)
+    content = db.Column(db.String)
+    tags = db.Column(db.String)
+
+
+class Tags(db.Model):
+    __tablename__ = 'tags'
+    id = db.Column(db.INTEGER, primary_key=True)
+    blog_id = db.Column(db.INTEGER)
+    tag = db.Column(db.String)
+
+    def __init__(self, blog_id, tag):
+        self.blog_id = blog_id
+        self.tag = tag

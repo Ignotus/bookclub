@@ -3,6 +3,7 @@
 {% block css %}
     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css">
 {% endblock %}
 {% block scripts %}
     <script src="https://toopay.github.io/bootstrap-markdown/js/to-markdown.js"></script>
@@ -10,43 +11,34 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js"></script>
 {% endblock %}
 {% block body %}
-{% set active_page = "books" %}
+{% set active_page = "blog" %}
 {% include "header.html" %}
 <div class="container">
-    <div class="main">
-        <form class="form" method="POST" id="add-book" role="form">
+	<div class="main">
+        <form class="form" method="POST" id="add-post" role="form">
             {{ form.hidden_tag() }}
 
             <div class="form-group">
-                <label>Автор книги*</label>
-                {{ form.author(class_='form-control', placeholder='Автор книги') }}
-            </div>
-            <div class="form-group">
-                <label>Назва книги*</label>
-                {{ form.name(class_='form-control', placeholder='Назва книги') }}
-            </div>
-
-            <div class="form-group">
-                <label>URL на картинку для залучення уваги :) *</label>
-                {{ form.img(class_='form-control', placeholder='URL на картинку для залучення уваги :)') }}
-            </div>
-
-            <div class="form-group">
-                <label>URL на додаткову інформацію *</label>
-                {{ form.url(class_='form-control', placeholder='URL на додаткову інформацію') }}
+                <label>Заголовок* </label>
+                {{ form.topic(class_='form-control', placeholder='Топік') }}
             </div>
  
             <div class="form-group">
-                <label>Опис книги *</label>
-                {{ form.description(placeholder='Опис книги') }}
+                <label>Текст* </label>
+                {{ form.content(placeholder='Багато букафф') }}
             </div>
 
             <div class="form-group">
                 <div class="md-preview"></div>
             <div>
 
+            <div class="form-group">
+                <label>Теги*</label><br/>
+                {{ form.tags(class_='form-control', placeholder='сюди введіть теги', **{'data-role':'tagsinput'}) }}
+            </div>
+
             <script>
-                $("textarea#description").markdown({
+                $("textarea#content").markdown({
                     resize:'vertical',
                     iconlibrary:'fa',
                     hiddenButtons: ['Preview', 'Code'],
@@ -65,13 +57,14 @@
         </form>
 
         <script>
+        	// TODO: Refactor this and a function in books_add.html
               $(function() {
                 $("#submit-button").click(function(e) {
                   e.preventDefault();
                   $.ajax({
-                    url: "/books/update",
+                    url: "/blog/add/submit",
                     type: 'POST',
-                    data: $("#add-book").serialize(),
+                    data: $("#add-post").serialize(),
                     beforeSend: function() {
                       $("#message").html("sending...");
                     },
@@ -83,15 +76,17 @@
                         $("#status").html(json_data["message"]);
                       }
                       else {
-                        window.location.replace("/books");
+                        window.location.replace("/blog");
                       }
                     }
                   });
                 });
               });
         </script>
+
+        * Реквайрід поля
     </div>
 
-    * Реквайрід поля
-</div>
+    <script src="https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+</div><!-- /.container -->
 {% endblock %}

@@ -2,7 +2,7 @@ import sys
 sys.path.append("../")
 
 from flask import render_template, redirect, url_for, request, session
-from flask_login import current_user, login_required, login_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 from app import app
 from schema import db

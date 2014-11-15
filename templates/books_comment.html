@@ -17,12 +17,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{book.book_author}} - {{ book.book_name }} | Сторінка обговорення</div>
         </div>
-        {% for user, comment in comment_data %}
+        {% for comment in comment_data %}
         <div class="panel panel-default">
             <div class="panel-body">
                 {{ comment.comment|markdown }}
             </div>
-            <div class="panel-footer"><div class="col-md-6">комент від <b>{{ user.first_name }} {{ user.last_name }}</b></div> {{ comment.timestamp }}</div>
+            <div class="panel-footer"><div class="col-md-6">комент від <b>{{ comment.user_first_name }} {{ comment.user_last_name }}</b></div> {{ comment.timestamp }}</div>
         </div>
         {% endfor %}
 

@@ -8,7 +8,7 @@ body {
 }
 
 .main {
-  padding-top:50px;
+  padding-top:20px;
 }
 
 /* Progress */
@@ -74,4 +74,10 @@ body {
 
 .md-editor.active {
   box-shadow: none;
+}
+
+/* Tag widget */
+
+.bootstrap-tagsinput {
+  border: none;
 }

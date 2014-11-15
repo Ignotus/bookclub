@@ -76,7 +76,6 @@ def comment_submit(id):
     form = CommentForm()
 
     if form.validate_on_submit():
-        print "Submit"
         db.session.add(Comments(datetime.datetime.now(), id, current_user.id, form.comment.data))
         book = Books.query.filter_by(id=id).first()
         book.comment_count += 1
@@ -89,13 +88,11 @@ def comment_submit(id):
 @login_required
 def books_comment(id):
     book = Books.query.filter_by(id=id).first()
-    comments = Comments.query.filter_by(book_id=id).all()
-
-    comment_data = [(User.query.filter_by(id=comment.user_id).first(), comment) for comment in comments]
+    comments = CommentsDetailed.query.filter_by(book_id=id).all()
 
     comment_form = CommentForm()
 
-    return render_template('books_comment.html', comment_data=comment_data, book=book, comment_form=comment_form)
+    return render_template('books_comment.html', comment_data=comments, book=book, comment_form=comment_form)
 
 
 @app.route('/books/update', methods=["POST"])

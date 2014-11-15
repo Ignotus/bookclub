@@ -11,6 +11,12 @@ class PasswordForm(Form):
     password = PasswordField('password', validators=[DataRequired()])
 
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('blog'))
+
+
 @app.route('/login', methods=["POST"])
 def login():
     form = PasswordForm()
