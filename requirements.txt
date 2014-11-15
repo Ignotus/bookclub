@@ -4,3 +4,4 @@ Flask-OAuth
 Flask-SQLAlchemy
 Flask-WTF
 mysql-python
+Flask-Markdown

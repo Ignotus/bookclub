@@ -4,18 +4,20 @@
 <head>
     <title>Exclusive Book Club Home Page</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/ua.png') }}">
+    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
     <link href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block css %}{% endblock %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    {% block scripts %}{% endblock %}
 </head>
 <body>
 {% block body %}{% endblock %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <center style="margin-top:20px">
     <a href="https://www.python.org/"><img src="{{ url_for('static', filename='img/python-powered.jpg') }}"/></a>
     <a href="https://github.com/Ignotus/bookclub"><img src="{{ url_for('static', filename='img/github.jpg') }}"/></a>

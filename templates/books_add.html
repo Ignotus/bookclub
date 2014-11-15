@@ -1,5 +1,14 @@
 {# home.html #}
 {% extends "base.html" %}
+{% block css %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock %}
+{% block scripts %}
+    <script src="https://toopay.github.io/bootstrap-markdown/js/to-markdown.js"></script>
+    <script src="https://toopay.github.io/bootstrap-markdown/js/markdown.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js"></script>
+{% endblock %}
 {% block body %}
 {% set active_page = "books" %}
 {% include "header.html" %}
@@ -26,11 +35,28 @@
                 <label>URL на додаткову інформацію</label>
                 {{ form.url(class_='form-control', placeholder='URL на додаткову інформацію') }}
             </div>
-
+ 
             <div class="form-group">
                 <label>Опис книги</label>
-                {{ form.description(class_='form-control', placeholder='Опис книги') }}
+                {{ form.description(placeholder='Опис книги') }}
             </div>
+
+            <div class="form-group">
+                <div class="md-preview"></div>
+            <div>
+
+            <script>
+                $("textarea#description").markdown({
+                    resize:'vertical',
+                    iconlibrary:'fa',
+                    hiddenButtons: ['Preview', 'Code'],
+                    onShow: function(e){
+                        $(".md-preview").html(e.parseContent())
+                    },
+                    onChange: function(e) {
+                        $(".md-preview").html(e.parseContent())
+                    }})
+            </script>
 
             <button type="submit" id="submit-button" class="btn btn-default">Відновити</button>
 
