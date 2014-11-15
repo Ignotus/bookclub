@@ -20,9 +20,9 @@
     <div class="panel panel-default">
         <div class="panel-body">
             {{ post.content|markdown }}
-            <hr/>
-            <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
 
+            <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
+            <hr/>
             {% for tag in tags %}
                 <a href="/blog/filter/tag/{{tag}}"><u>{{tag}}</u></a> 
             {% endfor %}
