@@ -1,5 +1,8 @@
-{# home.html #}
 {% extends "base.html" %}
+{% block header %}
+    {% set active_page = "books" %}
+    {% include "header.html" %}
+{% endblock %}
 {% block css %}
     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -10,45 +13,46 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js"></script>
 {% endblock %}
 {% block body %}
-{% set active_page = "books" %}
-{% include "header.html" %}
-<div class="container">
-    <div class="main">
-        <div class="page-header"><h1>{{book.book_author}} - {{ book.book_name }} | Сторінка обговорення</h1></div>
-        {% for comment in comment_data %}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                {{ comment.comment|markdown }}
-            </div>
-            <div class="panel-footer"><div class="col-md-6">комент від <b>{{ comment.user_first_name }} {{ comment.user_last_name }}</b></div> {{ comment.timestamp }}</div>
-        </div>
-        {% endfor %}
-
-        <form class="form" method="POST" id="add-book" role="form" action="/books/{{ book.id }}/comment/submit">
-            <div class="form-group">
-                {{ comment_form.hidden_tag() }}
-                {{ comment_form.comment(rows='5', placeholder='Комент') }}
-            </div>
-
-            <div class="form-group">
-                <div class="md-preview"></div>
-            <div>
-
-            <script>
-                $("textarea#comment").markdown({
-                    resize:'vertical',
-                    iconlibrary:'fa',
-                    hiddenButtons: ['Preview', 'Code'],
-                    onShow: function(e){
-                        $(".md-preview").html(e.parseContent())
-                    },
-                    onChange: function(e) {
-                        $(".md-preview").html(e.parseContent())
-                    }})
-            </script>
-
-            <button type="submit" id="submit-button" class="btn btn-primary">Додати</button>
-        </form>
+    <div class="page-header">
+        <h1>{{book.book_author}} - {{ book.book_name }} | Сторінка обговорення</h1>
     </div>
-</div>
+    {% for comment in comment_data %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{ comment.comment|markdown }}
+        </div>
+        <div class="panel-footer">
+            <div class="col-md-6">
+                комент від <b>{{ comment.user_first_name }} {{ comment.user_last_name }}</b>
+            </div>
+            {{ comment.timestamp }}
+        </div>
+    </div>
+    {% endfor %}
+
+    <form class="form" method="POST" id="add-book" role="form" action="/books/{{ book.id }}/comment/submit">
+        <div class="form-group">
+            {{ comment_form.hidden_tag() }}
+            {{ comment_form.comment(rows='5', placeholder='Комент') }}
+        </div>
+
+        <div class="form-group">
+            <div class="md-preview"></div>
+        <div>
+
+        <script>
+            $("textarea#comment").markdown({
+                resize:'vertical',
+                iconlibrary:'fa',
+                hiddenButtons: ['Preview', 'Code'],
+                onShow: function(e){
+                    $(".md-preview").html(e.parseContent())
+                },
+                onChange: function(e) {
+                    $(".md-preview").html(e.parseContent())
+                }})
+        </script>
+
+        <button type="submit" id="submit-button" class="btn btn-primary">Додати</button>
+    </form>
 {% endblock %}

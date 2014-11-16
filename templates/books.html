@@ -1,25 +1,22 @@
-{# home.html #}
 {% extends "base.html" %}
+{% block header %}
+    {% set active_page = "books" %}
+    {% include "header.html" %}
+{% endblock %}
 {% block body %}
-{% set active_page = "books" %}
-{% include "header.html" %}
-<div class="container">
-    <div class="main">
-        <a href="/books/add">
-            <button type="button" id="submit-button" class="btn btn-primary" style="margin-bottom:20px">
-            Додати книгу до бібліотеки
-        </button>
-        </a>
-        {% for book in books %}
-        <div class="panel panel-default">
-            <div class="panel-heading">{{book.book_author}} - {{ book.book_name }}</div>
-            <div class="panel-body">
-                <div class="col-md-4"><img src="{{ book.img }}" class="img-thumbnail"></div>
-                <div class="col-md-6"><p>{{ book.description }}</p><p><a href="{{ book.url }}">Детальніше</a></p></div>
-            </div>
-            <div class="panel-footer"><a href="/books/{{ book.id }}/edit">Виправити</a><!-- | <a href="/books/{{ book.id }}/delete">Видалити</a> --> | <a href="/progress/book/{{ book.id }}">Прогрес по книзі</a> | <a href="/books/{{ book.id }}/comment">Коментувати [{{ book.comment_count }}]</a>  | <a href="/books/{{ book.id }}/read">Читати зараз цю книгу</a></div>
+    <a href="/books/add">
+        <button type="button" id="submit-button" class="btn btn-primary" style="margin-bottom:20px">
+        Додати книгу до бібліотеки
+    </button>
+    </a>
+    {% for book in books %}
+    <div class="panel panel-default">
+        <div class="panel-heading">{{book.book_author}} - {{ book.book_name }}</div>
+        <div class="panel-body">
+            <div class="col-md-4"><img src="{{ book.img }}" class="img-thumbnail"></div>
+            <div class="col-md-6"><p>{{ book.description }}</p><p><a href="{{ book.url }}">Детальніше</a></p></div>
         </div>
-        {% endfor %}
+        <div class="panel-footer"><a href="/books/{{ book.id }}/edit">Виправити</a><!-- | <a href="/books/{{ book.id }}/delete">Видалити</a> --> | <a href="/progress/book/{{ book.id }}">Прогрес по книзі</a> | <a href="/books/{{ book.id }}/comment">Коментувати [{{ book.comment_count }}]</a>  | <a href="/books/{{ book.id }}/read">Читати зараз цю книгу</a></div>
     </div>
-</div>
+    {% endfor %}
 {% endblock %}

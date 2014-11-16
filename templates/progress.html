@@ -1,34 +1,33 @@
-{# home.html #}
 {% extends "base.html" %}
+{% block header %}
+    {% set active_page = "progress" %}
+    {% include "header.html" %}
+{% endblock %}
 {% block css %}
-  <link href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.css" rel="stylesheet">
 {% endblock %}
 {% block body %}
-{% set active_page = "progress" %}
-{% include "header.html" %}
-<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
-<div class="container">
-    <div class="main">
-        <div class="page-header"><h1>{{ book.book_author }} - {{ book.book_name }}</h1></div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.1.15-beta/nv.d3.min.js"></script>
+    <div class="page-header"><h1>{{ book.book_author }} - {{ book.book_name }}</h1></div>
 
-        <div id='chart'>
-            <svg style='height:500px; width:1000px;'> </svg>
-        </div>
-        <script>
-            d3.json('/progress/data/{{ book.id }}', function(data) {
-              nv.addGraph(function() {
+    <div id='chart'>
+        <svg style='height:500px; width:1000px;'> </svg>
+    </div>
+    <script>
+        d3.json('/progress/data/{{ book.id }}', function(data) {
+            nv.addGraph(function() {
                 var chart = nv.models.cumulativeLineChart()
-                              .x(function(d) { return d[0] })
-                              .y(function(d) { return d[1]/100 }) //adjusting, 100% is 1.00, not 100 as it is in the data
-                              .color(d3.scale.category10().range())
-                              .showControls(false)
-                              ;
+                    .x(function(d) { return d[0] })
+                    .y(function(d) { return d[1]/100 }) //adjusting, 100% is 1.00, not 100 as it is in the data
+                    .color(d3.scale.category10().range())
+                    .showControls(false)
+                    ;
 
-                 chart.xAxis
+                chart.xAxis
                     .tickFormat(function(d) {
                         return d3.time.format('%x')(new Date(d))
-                      });
+                    });
 
                 chart.yAxis
                     .tickFormat(d3.format(',.1%'));
@@ -41,10 +40,7 @@
                 nv.utils.windowResize(chart.update);
 
                 return chart;
-              });
             });
-        </script>
-    </div>
-</div><!-- /.container -->
-
+        });
+    </script>
 {% endblock %}

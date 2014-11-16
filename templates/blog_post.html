@@ -1,20 +1,20 @@
-{# home.html #}
 {% extends "base.html" %}
+{% block header %}
+    {% set active_page = "blog" %}
+    {% include "header.html" %}
+{% endblock %}
 {% block body %}
-{% set active_page = "blog" %}
-{% include "header.html" %}
-<div id="fb-root"></div>
-<script>
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=790361964335664&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-    
-<div class="container">
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=790361964335664&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <div class="blog-header">
         <h1 class="blog-title">Блог книжкового клубу</h1>
         <p class="lead blog-description">Бла-бла-бла</p>
@@ -56,5 +56,4 @@
         })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div><!-- /.container -->
 {% endblock %}

@@ -1,5 +1,8 @@
-{# home.html #}
 {% extends "base.html" %}
+{% block header %}
+    {% set active_page = "books" %}
+    {% include "header.html" %}
+{% endblock %}
 {% block css %}
     <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -10,88 +13,80 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js"></script>
 {% endblock %}
 {% block body %}
-{% set active_page = "books" %}
-{% include "header.html" %}
-<div class="container">
-    <div class="main">
-        <form class="form" method="POST" id="add-book" role="form">
-            {{ form.hidden_tag() }}
+    <form class="form" method="POST" id="add-book" role="form">
+        {{ form.hidden_tag() }}
 
-            <div class="form-group">
-                <label>Автор книги*</label>
-                {{ form.author(class_='form-control', placeholder='Автор книги') }}
-            </div>
-            <div class="form-group">
-                <label>Назва книги*</label>
-                {{ form.name(class_='form-control', placeholder='Назва книги') }}
-            </div>
+        <div class="form-group">
+            <label>Автор книги*</label>
+            {{ form.author(class_='form-control', placeholder='Автор книги') }}
+        </div>
+        <div class="form-group">
+            <label>Назва книги*</label>
+            {{ form.name(class_='form-control', placeholder='Назва книги') }}
+        </div>
 
-            <div class="form-group">
-                <label>URL на картинку для залучення уваги :) *</label>
-                {{ form.img(class_='form-control', placeholder='URL на картинку для залучення уваги :)') }}
-            </div>
+        <div class="form-group">
+            <label>URL на картинку для залучення уваги :) *</label>
+            {{ form.img(class_='form-control', placeholder='URL на картинку для залучення уваги :)') }}
+        </div>
 
-            <div class="form-group">
-                <label>URL на додаткову інформацію *</label>
-                {{ form.url(class_='form-control', placeholder='URL на додаткову інформацію') }}
-            </div>
- 
-            <div class="form-group">
-                <label>Опис книги *</label>
-                {{ form.description(placeholder='Опис книги') }}
-            </div>
+        <div class="form-group">
+            <label>URL на додаткову інформацію *</label>
+            {{ form.url(class_='form-control', placeholder='URL на додаткову інформацію') }}
+        </div>
 
-            <div class="form-group">
-                <div class="md-preview"></div>
-            <div>
+        <div class="form-group">
+            <label>Опис книги *</label>
+            {{ form.description(placeholder='Опис книги') }}
+        </div>
 
-            <script>
-                $("textarea#description").markdown({
-                    resize:'vertical',
-                    iconlibrary:'fa',
-                    hiddenButtons: ['Preview', 'Code'],
-                    onShow: function(e){
-                        $(".md-preview").html(e.parseContent())
-                    },
-                    onChange: function(e) {
-                        $(".md-preview").html(e.parseContent())
-                    }})
-            </script>
+        <div class="form-group">
+            <div class="md-preview"></div>
+        <div>
 
-            <button type="submit" id="submit-button" class="btn btn-primary">Відновити</button>
+        <button type="submit" id="submit-button" class="btn btn-primary">Відновити</button>
 
-            <div id="message"></div>
-            <div id="status"></div>
-        </form>
+        <div id="message"></div>
+        <div id="status"></div>
+    </form>
 
-        <script>
-              $(function() {
-                $("#submit-button").click(function(e) {
-                  e.preventDefault();
-                  $.ajax({
+    <script>
+        $("textarea#description").markdown({
+            resize:'vertical',
+            iconlibrary:'fa',
+            hiddenButtons: ['Preview', 'Code'],
+            onShow: function(e){
+                $(".md-preview").html(e.parseContent())
+            },
+            onChange: function(e) {
+                $(".md-preview").html(e.parseContent())
+            }})
+
+        $(function() {
+            $("#submit-button").click(function(e) {
+                e.preventDefault();
+                $.ajax({
                     url: "/books/update",
                     type: 'POST',
                     data: $("#add-book").serialize(),
                     beforeSend: function() {
-                      $("#message").html("sending...");
+                        $("#message").html("sending...");
                     },
                     success: function(data) {
-                      var json_data = jQuery.parseJSON(data);
-                      if (json_data["type"] == "error") {
-                        $("#message").hide();
-                        $("#status").addClass("bg-danger");
-                        $("#status").html(json_data["message"]);
-                      }
-                      else {
-                        window.location.replace("/books");
-                      }
+                        var json_data = jQuery.parseJSON(data);
+                        if (json_data["type"] == "error") {
+                            $("#message").hide();
+                            $("#status").addClass("bg-danger");
+                            $("#status").html(json_data["message"]);
+                        }
+                        else {
+                            window.location.replace("/books");
+                        }
                     }
-                  });
                 });
-              });
-        </script>
-    </div>
+            });
+        });
+    </script>
 
     * Обов’язкові поля
-</div>
 {% endblock %}

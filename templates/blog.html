@@ -1,9 +1,9 @@
-{# home.html #}
 {% extends "base.html" %}
+{% block header %}
+    {% set active_page = "blog" %}
+    {% include "header.html" %}
+{% endblock %}
 {% block body %}
-{% set active_page = "blog" %}
-{% include "header.html" %}
-<div class="container">
     <div class="blog-header">
         <h1 class="blog-title">Блог книжкового клубу</h1>
         <p class="lead blog-description">Бла-бла-бла</p>
@@ -40,6 +40,4 @@
         </div>
     </div>
     {% endif %}
-
-</div>
 {% endblock %}
