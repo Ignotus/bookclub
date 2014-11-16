@@ -4,14 +4,14 @@
     {% include "header.html" %}
 {% endblock %}
 {% block css %}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css">
+    {{ stylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
+    {{ stylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
+    {{ stylesheet("https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css") }}
 {% endblock %}
 {% block scripts %}
-    <script src="https://toopay.github.io/bootstrap-markdown/js/to-markdown.js"></script>
-    <script src="https://toopay.github.io/bootstrap-markdown/js/markdown.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js"></script>
+    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/to-markdown.js") }}
+    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/markdown.js") }}
+    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
 {% endblock %}
 {% block body %}
     <form class="form" method="POST" id="add-post" role="form">
@@ -36,19 +36,6 @@
             {{ form.tags(class_='form-control', placeholder='сюди введіть теги', **{'data-role':'tagsinput'}) }}
         </div>
 
-        <script>
-            $("textarea#content").markdown({
-                resize:'vertical',
-                iconlibrary:'fa',
-                hiddenButtons: ['Preview', 'Code'],
-                onShow: function(e){
-                    $(".md-preview").html(e.parseContent())
-                },
-                onChange: function(e) {
-                    $(".md-preview").html(e.parseContent())
-                }})
-        </script>
-
         <button type="submit" id="submit-button" class="btn btn-primary">Відновити</button>
 
         <div id="message"></div>
@@ -56,6 +43,17 @@
     </form>
 
     <script>
+        $("textarea#content").markdown({
+            resize:'vertical',
+            iconlibrary:'fa',
+            hiddenButtons: ['Preview', 'Code'],
+            onShow: function(e){
+                $(".md-preview").html(e.parseContent())
+            },
+            onChange: function(e) {
+                $(".md-preview").html(e.parseContent())
+            }})
+
         // TODO: Refactor this and a function in books_add.html
         $(function() {
             $("#submit-button").click(function(e) {
@@ -82,7 +80,6 @@
             });
         });
     </script>
-
     * Обов’язкові поля
-    <script src="https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    {{ javascript("https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.js") }}
 {% endblock %}

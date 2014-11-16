@@ -4,13 +4,13 @@
     {% include "header.html" %}
 {% endblock %}
 {% block css %}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    {{ stylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
+    {{ stylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
 {% endblock %}
 {% block scripts %}
-    <script src="https://toopay.github.io/bootstrap-markdown/js/to-markdown.js"></script>
-    <script src="https://toopay.github.io/bootstrap-markdown/js/markdown.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js"></script>
+    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/to-markdown.js")}}
+    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/markdown.js") }}
+    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
 {% endblock %}
 {% block body %}
     <form class="form" method="POST" id="add-book" role="form">
