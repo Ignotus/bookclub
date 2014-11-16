@@ -3,33 +3,43 @@
 {% block body %}
 {% set active_page = "blog" %}
 {% include "header.html" %}
-    <div id="fb-root"></div>
-    <script>
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=790361964335664&version=v2.0";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+<div id="fb-root"></div>
+<script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=790361964335664&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+    
 <div class="container">
-    <div class="main">
+    <div class="blog-header">
+        <h1 class="blog-title">Блог книжкового клубу</h1>
+        <p class="lead blog-description">Бла-бла-бла</p>
+    </div>
 
-    <h3><a href="/blog/{{ post.id }}">{{ post.topic }}</a><small>[<a href="/blog/{{ post.id }}/update">Змінити</a>]</small></h3>
-    <div class="panel panel-default">
-        <div class="panel-body">
-            {{ post.content|markdown }}
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+            <div class="blog-post">
+                <h2 class="blog-post-title">{{ post.topic }}  <small>[<a href="/blog/{{ post.id }}/update">Змінити</a>]</small></h2>
+                <p class="blog-post-meta">
+                    {{ post.timestamp }} написав {{ post.user_first_name }} {{ post.user_last_name }}
+                </p>
 
-            <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
-            <hr/>
-            {% for tag in tags %}
-                <a href="/blog/filter/tag/{{tag}}"><u>{{tag}}</u></a> 
-            {% endfor %}
-        </div>
-        <div class="panel-footer">
-            Написав <b>{{ post.user_first_name }} {{ post.user_last_name }}</b> | {{ post.timestamp }} | Останні зміни: {{ post.last_update }}
-            
+                {{ post.content|markdown }}
+
+                <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
+                <hr/>
+                {% for tag in tags %}
+                    <a href="/blog/filter/tag/{{tag}}"><u>{{tag}}</u></a> 
+                {% endfor %}
+
+                <p class="blog-post-meta">
+                    Останні зміни: {{ post.last_update }}
+                </p>
+            </div>
         </div>
     </div>
 

@@ -5,7 +5,11 @@
 {% include "header.html" %}
 <div class="container">
     <div class="main">
-        <div type="submit" id="submit-button" class="btn btn-default" style="margin-bottom:20px"><a href="/books/add">Додати книгу до бібліотеки</a></div>
+        <a href="/books/add">
+            <button type="button" id="submit-button" class="btn btn-primary" style="margin-bottom:20px">
+            Додати книгу до бібліотеки
+        </button>
+        </a>
         {% for book in books %}
         <div class="panel panel-default">
             <div class="panel-heading">{{book.book_author}} - {{ book.book_name }}</div>
