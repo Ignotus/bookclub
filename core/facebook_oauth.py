@@ -1,12 +1,8 @@
 from flask import session
-from flask_login import LoginManager
 from flask_oauth import OAuth
 
-from config import *
-from app import app
-from tables import User
+from config import FACEBOOK_APP_ID, FACEBOOK_APP_SECRET
 
-### OAuth Settings
 oauth = OAuth()
 
 facebook = oauth.remote_app('facebook',
@@ -17,17 +13,6 @@ facebook = oauth.remote_app('facebook',
                             consumer_key=FACEBOOK_APP_ID,
                             consumer_secret=FACEBOOK_APP_SECRET,
                             request_token_params={'scope': 'email'})
-
-### Login manager settings
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
-@login_manager.user_loader
-def load_user(userid):
-    user = User.query.get(int(userid))
-    if user:
-        return user
 
 
 @facebook.tokengetter

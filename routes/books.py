@@ -1,20 +1,24 @@
 import datetime
-from include import *
 
-from flask_wtf import Form
-from flask_wtf.html5 import URLField
-from wtforms import StringField, HiddenField, TextAreaField
-from wtforms.validators import DataRequired, url
+from core.db import db
+from core.forms import BookInfoForm, CommentForm
+from core.tables import Books, Common, Comments, CommentsDetailed
+
+from flask import render_template, Blueprint, redirect, url_for, request
+from flask_login import current_user, login_required
 
 
-@app.route('/books')
+books = Blueprint('books', __name__, url_prefix='/books')
+
+
+@books.route('/')
 @login_required
-def books():
+def main():
     books_info = db.session.query(Books).all()
-    return render_template('books.html', books=books_info)
+    return render_template('books/main.html', books=books_info)
 
 
-@app.route('/books/<int:id>/read')
+@books.route('/<int:id>/read')
 @login_required
 def book_read(id):
     current_book = Common.query.filter_by(key="current_book").first()
@@ -24,26 +28,17 @@ def book_read(id):
         current_book.value = str(id)
 
     db.session.commit()
-    return redirect(url_for('home'))
+    return redirect(url_for('home.main'))
 
 
-class BookInfoForm(Form):
-    id = HiddenField('id')
-    author = StringField('author', validators=[DataRequired()])
-    name = StringField('name', validators=[DataRequired()])
-    img = URLField(validators=[url()])
-    url = URLField(validators=[url()])
-    description = TextAreaField(validators=[DataRequired()])
-
-
-@app.route('/books/add')
+@books.route('/add')
 @login_required
 def books_add():
     form = BookInfoForm()
-    return render_template('books_add.html', form=form)
+    return render_template('books/add.html', form=form)
 
 
-@app.route('/books/<int:id>/edit')
+@books.route('/<int:id>/edit')
 @login_required
 def books_edit(id):
     book_data = Books.query.filter_by(id=id).first()
@@ -56,21 +51,18 @@ def books_edit(id):
     form.url.data = book_data.url
     form.description.data = book_data.description
 
-    return render_template('books_add.html', form=form)
+    return render_template('books/add.html', form=form)
 
 
-@app.route('/books/<int:id>/delete')
+@books.route('/<int:id>/delete')
 @login_required
 def books_delete(id):
     db.session.delete(Books.query.filter_by(id=id).first())
     db.session.commit()
-    return redirect(url_for('books'))
+    return redirect(url_for('main'))
 
 
-class CommentForm(Form):
-    comment = TextAreaField(validators=[DataRequired()])
-
-@app.route('/books/<int:id>/comment/submit', methods=["POST"])
+@books.route('/<int:id>/comment/submit', methods=["POST"])
 @login_required
 def comment_submit(id):
     form = CommentForm()
@@ -81,10 +73,10 @@ def comment_submit(id):
         book.comment_count += 1
         db.session.commit()
 
-    return redirect(url_for('books_comment', id=id))
+    return redirect(url_for('books.books_comment', id=id))
 
 
-@app.route('/books/<int:id>/comment')
+@books.route('/<int:id>/comment')
 @login_required
 def books_comment(id):
     book = Books.query.filter_by(id=id).first()
@@ -92,10 +84,10 @@ def books_comment(id):
 
     comment_form = CommentForm()
 
-    return render_template('books_comment.html', comment_data=comments, book=book, comment_form=comment_form)
+    return render_template('books/comment.html', comment_data=comments, book=book, comment_form=comment_form)
 
 
-@app.route('/books/update', methods=["POST"])
+@books.route('/update', methods=["POST"])
 @login_required
 def books_update():
     form = BookInfoForm()

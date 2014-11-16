@@ -1,7 +1,10 @@
-from include import *
+from flask import render_template, Blueprint
+from flask_login import login_required
+
+calendar = Blueprint('calendar', __name__, url_prefix='/calendar')
 
 
-@app.route('/calendar')
+@calendar.route('/')
 @login_required
-def calendar():
-    return render_template('calendar.html')
+def main():
+    return render_template('calendar/calendar.html')

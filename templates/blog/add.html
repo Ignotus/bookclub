@@ -49,7 +49,7 @@
             $("#submit-button").click(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    url: "/blog/add/submit",
+                    url: "/blog/update",
                     type: 'POST',
                     data: $("#add-post").serialize(),
                     beforeSend: function() {

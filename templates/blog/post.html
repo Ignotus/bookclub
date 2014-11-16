@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-sm-8 blog-main">
             <div class="blog-post">
-                <h2 class="blog-post-title">{{ post.topic }}  <small>[<a href="/blog/{{ post.id }}/update">Змінити</a>]</small></h2>
+                <h2 class="blog-post-title">{{ post.topic }} {% if current_user.is_authenticated() %}<small>[<a href="/blog/{{ post.id }}/update">Змінити</a>]</small>{% endif %}</h2>
                 <p class="blog-post-meta">
                     {{ post.timestamp }} написав {{ post.user_first_name }} {{ post.user_last_name }}
                 </p>

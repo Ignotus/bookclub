@@ -4,7 +4,7 @@
     {% include "header.html" %}
 {% endblock %}
 {% block body %}
-    <form class="form" method="POST" id="progress-form" role="form" action="/login">
+    <form class="form" method="POST" id="progress-form" role="form" action="/auth/login">
         <input type="hidden" name="next" value={{next}}>
         {{ login_form.hidden_tag() }}
         {{ form_item(login_form.password(class_='form-control'), 'Пароль?') }}

@@ -21,12 +21,11 @@
         {% endif %}
         {% endfor %}
 
-        {% if current_user.first_name %}
-            <a class="blog-nav-item-right" href="/logout">Logout</a>
+        {% if current_user.is_authenticated() %}
+            <a class="blog-nav-item-right" href="/auth/logout">Logout</a>
             <span class="blog-nav-item-right" href="#">Йоу, {{ current_user.first_name }}! Як справи?</span>
         {% else %}
-            <a class="blog-nav-item-right" href="/home">Аааавторизуватися</a>
-
+            <a class="blog-nav-item-right" href="/auth">Аааавторизуватися</a>
         {% endif %}
         </nav>
     </div>

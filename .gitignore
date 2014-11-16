@@ -54,4 +54,5 @@ docs/_build/
 target/
 
 # Project files
-config.py
+core/config.py
+.idea

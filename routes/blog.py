@@ -1,29 +1,24 @@
 import re
 import datetime
 
-from include import *
+from core.tables import BlogDetailed, Blog, Tags
+from core.db import db
+from core.forms import BlogPost
 
-from sqlalchemy import desc
-
-from flask_wtf import Form
-from wtforms import StringField, HiddenField, TextAreaField
-from wtforms.validators import DataRequired
+from flask import render_template, Blueprint
+from flask_login import current_user, login_required
 
 
-@app.route('/blog')
-def blog():
+blog = Blueprint('blog', __name__, url_prefix='/blog')
+
+
+@blog.route('/')
+def blog_main():
     posts = db.session.query(BlogDetailed).all()
-    return render_template('blog.html', posts=posts)
+    return render_template('blog/main.html', posts=posts)
 
 
-class BlogPost(Form):
-    id = HiddenField('id')
-    topic = StringField('topic', validators=[DataRequired()])
-    content = TextAreaField('content', validators=[DataRequired()])
-    tags = StringField('tags', validators=[DataRequired()])
-
-
-@app.route('/blog/add/submit', methods=["POST"])
+@blog.route('/add/submit', methods=["POST"])
 @login_required
 def blog_add_submit():
     form = BlogPost()
@@ -44,7 +39,9 @@ def blog_add_submit():
 
             for tag in tags:
                 db.session.add(Tags(new_post.id, tag))
-        else: # Update old posts
+
+        # Update old posts
+        else:
             post = db.session.query(Blog).filter_by(id=form.id.data).first()
 
             if post:
@@ -71,15 +68,16 @@ def blog_add_submit():
 
     return render_template('plain_data.html', data=msg)
 
-@app.route('/blog/<id>')
+
+@blog.route('/<id>')
 def blog_post(id):
     post = db.session.query(BlogDetailed).filter_by(id=id).first()
 
     tags = re.split('\s*,\s*', post.tags)
-    return render_template('blog_post.html', post=post, tags=tags)
+    return render_template('blog/post.html', post=post, tags=tags)
 
 
-@app.route('/blog/<id>/update')
+@blog.route('/<id>/update')
 @login_required
 def blog_update(id):
     post = db.session.query(Blog).filter_by(id=id).first()
@@ -90,25 +88,22 @@ def blog_update(id):
     form.content.data = post.content
     form.tags.data = post.tags
 
-    return render_template('blog_add.html', form=form)
+    return render_template('blog/add.html', form=form)
 
 
-@app.route('/blog/add')
+@blog.route('/add')
 @login_required
 def blog_add():
     form = BlogPost()
-    return render_template('blog_add.html', form=form)
+    return render_template('blog/add.html', form=form)
 
 
-@app.route('/blog/filter/tag/<tag>')
+@blog.route('/filter/tag/<tag>')
 def blog_filter_by_tag(tag):
     posts_with_tags = db.session.query(Tags).filter_by(tag=tag).all()
 
     post_ids = [post.blog_id for post in posts_with_tags]
 
-    posts = []
+    posts = [db.session.query(BlogDetailed).filter_by(id=id).first() for id in post_ids]
 
-    for id in post_ids:
-        posts += [db.session.query(BlogDetailed).filter_by(id=id).first()]
-
-    return render_template('blog.html', posts=posts)
+    return render_template('blog/main.html', posts=posts)

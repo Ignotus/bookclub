@@ -1,53 +1,29 @@
 import datetime
-from include import *
-from flask_wtf import Form
-from flask_wtf.html5 import IntegerField
-from wtforms import HiddenField
-from wtforms.validators import DataRequired, NumberRange
 
-from login import check_authentication
+from flask import render_template, Blueprint
+from flask_login import current_user, login_required
 
+from core.utils import get_current_book
+from core.tables import Progress, Books, User
+from core.forms import ProgressForm
+from core.db import db
 
-class ProgressForm(Form):
-    id = HiddenField('id')
-    progress = IntegerField('name', validators=[DataRequired(), NumberRange(0, 100)])
+progress = Blueprint('progress', __name__, url_prefix='/progress')
 
 
-@app.route('/home')
-@check_authentication
-def home():
-    current_book = get_current_book()
-
-    last_progress_info = db.session.query(Progress).filter_by(book_id=current_book.id) \
-        .filter_by(user_id=current_user.id) \
-        .order_by(Progress.id.desc()).first() if current_book is not None else None
-
-    form = ProgressForm()
-    form.id.data = current_book.id
-
-    if last_progress_info:
-        form.progress.data = last_progress_info.progress
-    else:
-        form.progress.data = 0
-
-    return render_template('home.html',
-                           current_book=current_book,
-                           form=form)
-
-
-@app.route('/progress')
+@progress.route('/')
 @login_required
-def progress():
-    return render_template('progress.html', book=get_current_book())
+def progress_graph():
+    return render_template('progress/progress.html', book=get_current_book())
 
 
-@app.route('/progress/book/<int:id>')
+@progress.route('/book/<int:id>')
 @login_required
 def progress_data_handler(id):
-    return render_template('progress.html', book=db.session.query(Books).filter_by(id=id).first())
+    return render_template('progress/progress.html', book=db.session.query(Books).filter_by(id=id).first())
 
 
-@app.route('/progress/update', methods=['POST'])
+@progress.route('/update', methods=['POST'])
 @login_required
 def progress_update():
     form = ProgressForm()
@@ -63,7 +39,7 @@ def progress_update():
     return "Something wrong"
 
 
-@app.route('/progress/data/<int:id>')
+@progress.route('/data/<int:id>')
 @login_required
 def progress_book_handler(id):
     book = db.session.query(Books).filter_by(id=id).first()
@@ -75,7 +51,7 @@ def progress_book_handler(id):
         progress_data_element = dict(key=user.first_name)
         progress_data_element["values"] = []
 
-        for prog in Progress.query.filter_by(book_id=book.id).filter_by(user_id=user.id).all():
+        for prog in Progress.query.filter_by(book_id=book.id, user_id=user.id).all():
             progress_data_element["values"] += [[int(1000 * (prog.timestamp - datetime.datetime(1970, 1, 1)).total_seconds()),
                                                  prog.progress]]
 
@@ -90,4 +66,4 @@ def progress_book_handler(id):
     for data in progress_data:
         data["values"] = [[min_date, 0]] + data["values"]
 
-    return render_template('plain_data.html', data=progress_data, book=book)
+    return render_template('plain_data.html', data=progress_data)

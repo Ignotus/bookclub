@@ -9,7 +9,7 @@
         <p class="lead blog-description">Бла-бла-бла</p>
     </div>
 
-    {% if current_user.first_name %}
+    {% if current_user.is_authenticated() %}
     <a href="/blog/add">
         <div type="submit" id="submit-button" class="btn btn-primary" style="margin-bottom:20px">
             Написати багато літер
@@ -18,7 +18,7 @@
     {% endif %}
 
     {% if posts|length == 0 %}
-        <h2>Ніхто нічого ще не написав :((</2>
+        <h2>Ніхто нічого ще не написав :((</h2>
     {% else %}
     <div class="row">
         <div class="col-sm-8 blog-main">
