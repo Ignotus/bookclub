@@ -4,6 +4,12 @@
 {% macro javascript(url) -%}
     <script src="{{ url }}"></script>
 {%- endmacro %}
+{% macro form_item(item, label, required=True) -%}
+    <div class="form-group">
+        <label>{{ label }} {% if required %}*{% endif %}</label>
+        <p>{{ item }}</p>
+    </div>
+{%- endmacro %}
 <!DOCTYPE html>
 <html>
 <head>

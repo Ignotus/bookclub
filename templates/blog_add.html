@@ -17,24 +17,14 @@
     <form class="form" method="POST" id="add-post" role="form">
         {{ form.hidden_tag() }}
 
-        <div class="form-group">
-            <label>Заголовок* </label>
-            {{ form.topic(class_='form-control', placeholder='Топік') }}
-        </div>
-
-        <div class="form-group">
-            <label>Текст* </label>
-            {{ form.content(placeholder='Багато букафф') }}
-        </div>
+        {{ form_item(form.topic(class_='form-control', placeholder='Топік'), "Заголовок") }}
+        {{ form_item(form.content(placeholder='Багато букафф'), "Текст") }}
 
         <div class="form-group">
             <div class="md-preview"></div>
         <div>
 
-        <div class="form-group">
-            <label>Теги*</label><br/>
-            {{ form.tags(class_='form-control', placeholder='сюди введіть теги', **{'data-role':'tagsinput'}) }}
-        </div>
+        {{ form_item(form.tags(class_='form-control', placeholder='сюди введіть теги', **{'data-role':'tagsinput'}), "Теги") }}
 
         <button type="submit" id="submit-button" class="btn btn-primary">Відновити</button>
 

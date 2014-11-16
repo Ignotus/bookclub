@@ -16,29 +16,11 @@
     <form class="form" method="POST" id="add-book" role="form">
         {{ form.hidden_tag() }}
 
-        <div class="form-group">
-            <label>Автор книги*</label>
-            {{ form.author(class_='form-control', placeholder='Автор книги') }}
-        </div>
-        <div class="form-group">
-            <label>Назва книги*</label>
-            {{ form.name(class_='form-control', placeholder='Назва книги') }}
-        </div>
-
-        <div class="form-group">
-            <label>URL на картинку для залучення уваги :) *</label>
-            {{ form.img(class_='form-control', placeholder='URL на картинку для залучення уваги :)') }}
-        </div>
-
-        <div class="form-group">
-            <label>URL на додаткову інформацію *</label>
-            {{ form.url(class_='form-control', placeholder='URL на додаткову інформацію') }}
-        </div>
-
-        <div class="form-group">
-            <label>Опис книги *</label>
-            {{ form.description(placeholder='Опис книги') }}
-        </div>
+        {{ form_item(form.author(class_='form-control', placeholder='Автор книги'), 'Автор книги') }}
+        {{ form_item(form.name(class_='form-control', placeholder='Назва книги'), 'Назва книги') }}
+        {{ form_item(form.img(class_='form-control', placeholder='URL на картинку для залучення уваги :)'), 'URL на картинку для залучення уваги :)') }}
+        {{ form_item(form.url(class_='form-control', placeholder='URL на додаткову інформацію'), 'URL на додаткову інформацію') }}
+        {{ form_item(form.description(placeholder='Опис книги'), 'Опис книги') }}
 
         <div class="form-group">
             <div class="md-preview"></div>
