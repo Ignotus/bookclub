@@ -18,7 +18,7 @@ def blog_main():
     return render_template('blog/main.html', posts=posts)
 
 
-@blog.route('/add/submit', methods=["POST"])
+@blog.route('/update', methods=["POST"])
 @login_required
 def blog_add_submit():
     form = BlogPost()
