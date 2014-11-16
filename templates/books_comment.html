@@ -14,9 +14,7 @@
 {% include "header.html" %}
 <div class="container">
     <div class="main">
-        <div class="panel panel-default">
-            <div class="panel-heading">{{book.book_author}} - {{ book.book_name }} | Сторінка обговорення</div>
-        </div>
+        <div class="page-header"><h1>{{book.book_author}} - {{ book.book_name }} | Сторінка обговорення</h1></div>
         {% for comment in comment_data %}
         <div class="panel panel-default">
             <div class="panel-body">
