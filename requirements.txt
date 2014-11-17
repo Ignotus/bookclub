@@ -5,3 +5,4 @@ Flask-SQLAlchemy
 Flask-WTF
 mysql-python
 Flask-Markdown
+gunicorn
