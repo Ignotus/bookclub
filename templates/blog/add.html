@@ -6,11 +6,11 @@
 {% block css %}
     {{ stylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
     {{ stylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
-    {{ stylesheet("https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css") }}
+    {{ stylesheet(url_for('static', filename='css/bootstrap-tagsinput.css')) }}
 {% endblock %}
 {% block scripts %}
-    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/to-markdown.js") }}
-    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/markdown.js") }}
+    {{ javascript(url_for('static', filename='js/to-markdown.js')) }}
+    {{ javascript(url_for('static', filename='js/markdown.js')) }}
     {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
 {% endblock %}
 {% block body %}
@@ -71,5 +71,5 @@
         });
     </script>
     * Обов’язкові поля
-    {{ javascript("https://timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.js") }}
+    {{ javascript(url_for('static', filename='js/bootstrap-tagsinput.js')) }}
 {% endblock %}
