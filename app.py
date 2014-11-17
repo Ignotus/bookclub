@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flaskext.markdown import Markdown
 
 from routes.auth import auth
@@ -37,6 +37,8 @@ app.secret_key = SECRET_KEY
 
 @app.route('/')
 def main():
+    if current_user.is_authenticated():
+        return redirect(url_for('home.main'))
     return redirect(url_for('blog.blog_main'))
 
 modules = [auth, blog, progress, home, calendar, books]
