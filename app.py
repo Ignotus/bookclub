@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_login import LoginManager
 from flaskext.markdown import Markdown
 
@@ -34,6 +34,10 @@ def load_user(userid):
 
 app.debug = DEBUG
 app.secret_key = SECRET_KEY
+
+@app.route('/')
+def main():
+    return redirect(url_for('blog.blog_main'))
 
 modules = [auth, blog, progress, home, calendar, books]
 
