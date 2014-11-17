@@ -4,7 +4,9 @@
     {% include "header.html" %}
 {% endblock %}
 {% block body %}
-    <h1>Unauthorized</h1>
-    <p>The server could not verify that you are authorized to access the URL requested.  You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required. бла-бла-бла</p>
-    <p>Перейдіть на це посилання для <b><a href="/auth">авторизації</a></b></p>
+    <div class="bs-callout bs-callout-danger">
+        <h1>Ви не авторизовані</h1>
+        <p>The server could not verify that you are authorized to access the URL requested.  You either supplied the wrong credentials (e.g. a bad password), or your browser doesn't understand how to supply the credentials required. бла-бла-бла</p>
+        <p>Перейдіть на <b><a href="/auth">це посилання</a></b> для авторизації</p>
+    </div>
 {% endblock %}

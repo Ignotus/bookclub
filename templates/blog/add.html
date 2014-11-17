@@ -59,7 +59,8 @@
                         var json_data = jQuery.parseJSON(data);
                         if (json_data["type"] == "error") {
                             $("#message").hide();
-                            $("#status").addClass("bg-danger");
+                            $("#status").addClass("alert bg-danger");
+                            $("#status").attr("role", "alert");
                             $("#status").html(json_data["message"]);
                         }
                         else {
