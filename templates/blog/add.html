@@ -6,7 +6,9 @@
 {% block css %}
     {{ stylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
     {{ stylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
-    {{ stylesheet(url_for('static', filename='css/bootstrap-tagsinput.css')) }}
+    {% assets "css_tagsinput" %}
+        {{ stylesheet(ASSET_URL) }}
+    {% endassets %}
 {% endblock %}
 {% block body %}
     <form class="form" method="POST" id="add-post" role="form">
@@ -28,11 +30,21 @@
     </form>
     * Обов’язкові поля
 {% endblock %}
+{% block cssopt %}
+    {{ jsstylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
+    {{ jsstylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
+    {% assets "css_tagsinput" %}
+        {{ jsstylesheet(ASSET_URL) }}
+    {% endassets %}
+{% endblock %}
 {% block scripts %}
-    {{ javascript(url_for('static', filename='js/to-markdown.js')) }}
-    {{ javascript(url_for('static', filename='js/markdown.js')) }}
+    {% assets "js_markdown" %}
+        {{ javascript(ASSET_URL) }}
+    {% endassets %}
     {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
-    {{ javascript(url_for('static', filename='js/bootstrap-tagsinput.js')) }}
+    {% assets "js_tagsinput" %}
+        {{ javascript(ASSET_URL) }}
+    {% endassets %}
 
     <script>
         $("textarea#content").markdown({

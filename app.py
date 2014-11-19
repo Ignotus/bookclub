@@ -55,7 +55,20 @@ def custom_401(error):
 assets = Environment(app)
 css = Bundle('css/blog.css', 'css/style.css',
             filters='cssmin', output='gen/style.min.css')
+
+js_markdown = Bundle('js/to-markdown.js', 'js/markdown.js',
+                     filters='jsmin', output='gen/markdown.min.js')
+
+css_tagsinput = Bundle('css/bootstrap-tagsinput.css', filters='cssmin',
+                        output='gen/bootstrap-tagsinput.min.css')
+
+js_tagsinput = Bundle('js/bootstrap-tagsinput.js', filters='jsmin',
+                        output='gen/bootstrap-tagsinput.min.js')
+
 assets.register('css_all', css)
+assets.register('js_markdown', js_markdown)
+assets.register('css_tagsinput', css_tagsinput)
+assets.register('js_tagsinput', js_tagsinput)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=PORT)

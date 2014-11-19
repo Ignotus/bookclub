@@ -1,5 +1,7 @@
 {% macro stylesheet(url) -%}
     <noscript><link rel="stylesheet" href="{{ url }}" /></noscript>
+{%- endmacro %}
+{% macro jsstylesheet(url) -%}
     <script type="text/javascript">
           var stylesheet = document.createElement('link');
           stylesheet.href = '{{ url }}';
@@ -45,6 +47,11 @@
     <a href="https://www.python.org/"><img src="{{ url_for('static', filename='img/python-powered.jpg') }}"/></a>
     <a href="https://github.com/Ignotus/bookclub"><img src="{{ url_for('static', filename='img/github.jpg') }}"/></a>
 </center>
+    {{ jsstylesheet("//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css") }}
+    {% block cssopt %}{% endblock %}
+    {% assets "css_all" %}
+    {{ jsstylesheet(ASSET_URL) }}
+    {% endassets %}
     {{ javascript("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js") }}
     {{ javascript("//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js") }}
     {% block scripts %}{% endblock %}
