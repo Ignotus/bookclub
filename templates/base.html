@@ -1,5 +1,12 @@
 {% macro stylesheet(url) -%}
-    <link rel="stylesheet" href="{{ url }}" />
+    <noscript><link rel="stylesheet" href="{{ url }}" /></noscript>
+    <script type="text/javascript">
+          var stylesheet = document.createElement('link');
+          stylesheet.href = '{{ url }}';
+          stylesheet.rel = 'stylesheet';
+          stylesheet.type = 'text/css';
+          document.getElementsByTagName('head')[0].appendChild(stylesheet);
+    </script>
 {%- endmacro %}
 {% macro javascript(url) -%}
     <script src="{{ url }}"></script>
@@ -26,6 +33,11 @@
 {% block header %}{% endblock %}
 <div class="container">
     <div class="main">
+    <noscript>
+        <div class="bs-callout bs-callout-danger">
+            Please enable javascript to process all interface elements correctly
+        </div>
+    </noscript>
     {% block body %}{% endblock %}
     </div>
 </div>
