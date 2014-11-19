@@ -18,8 +18,9 @@
 
     {{ stylesheet("//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css") }}
     {% block css %}{% endblock %}
-    {{ stylesheet(url_for('static', filename='css/style.css')) }}
-    {{ stylesheet(url_for('static', filename='css/blog.css')) }}
+    {% assets "css_all" %}
+    {{ stylesheet(ASSET_URL) }}
+    {% endassets %}
 </head>
 <body>
 {% block header %}{% endblock %}

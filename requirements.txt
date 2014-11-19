@@ -6,3 +6,5 @@ Flask-WTF
 mysql-python
 Flask-Markdown
 gunicorn
+Flask-Assets
+cssmin

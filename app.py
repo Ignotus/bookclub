@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_login import LoginManager, current_user
 from flaskext.markdown import Markdown
+from flask_assets import Environment, Bundle
 
 from routes.auth import auth
 from routes.blog import blog
@@ -51,6 +52,10 @@ for module in modules:
 def custom_401(error):
     return render_template('unauthorized.html')
 
+assets = Environment(app)
+css = Bundle('css/blog.css', 'css/style.css',
+            filters='cssmin', output='gen/style.min.css')
+assets.register('css_all', css)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=PORT)

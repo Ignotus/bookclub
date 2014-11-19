@@ -56,3 +56,5 @@ target/
 # Project files
 core/config.py
 .idea
+static/gen
+static/.webassets-cache
