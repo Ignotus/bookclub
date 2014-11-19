@@ -38,10 +38,6 @@
         <button type="submit" id="submit-button" class="btn btn-primary">Додати</button>
     </form>
 {% endblock %}
-{% block cssopt %}
-    {{ jsstylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
-    {{ jsstylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
-{% endblock %}
 {% block scripts %}
     {% assets "js_markdown" %}
         {{ javascript(ASSET_URL) }}

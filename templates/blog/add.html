@@ -30,13 +30,6 @@
     </form>
     * Обов’язкові поля
 {% endblock %}
-{% block cssopt %}
-    {{ jsstylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
-    {{ jsstylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
-    {% assets "css_tagsinput" %}
-        {{ jsstylesheet(ASSET_URL) }}
-    {% endassets %}
-{% endblock %}
 {% block scripts %}
     {% assets "js_markdown" %}
         {{ javascript(ASSET_URL) }}
