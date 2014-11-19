@@ -7,11 +7,6 @@
     {{ stylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
     {{ stylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
 {% endblock %}
-{% block scripts %}
-    {{ javascript(url_for('static', filename='js/to-markdown.js')) }}
-    {{ javascript(url_for('static', filename='js/markdown.js')) }}
-    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
-{% endblock %}
 {% block body %}
     <form class="form" method="POST" id="add-book" role="form">
         {{ form.hidden_tag() }}
@@ -32,7 +27,14 @@
         <div id="status"></div>
     </form>
 
-    <script>
+    * Обов’язкові поля
+{% endblock %}
+{% block scripts %}
+    {{ javascript(url_for('static', filename='js/to-markdown.js')) }}
+    {{ javascript(url_for('static', filename='js/markdown.js')) }}
+    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
+
+        <script>
         $("textarea#description").markdown({
             resize:'vertical',
             iconlibrary:'fa',
@@ -70,6 +72,4 @@
             });
         });
     </script>
-
-    * Обов’язкові поля
 {% endblock %}

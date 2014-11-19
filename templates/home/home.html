@@ -35,27 +35,28 @@
         </form>
 
         <div id="response"></div>
-
-        <script>
-            $(function() {
-                $("#submit-button").click(function(e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: "/progress/update",
-                        type: 'POST',
-                        data: $("#progress-form").serialize(),
-                        beforeSend: function() {
-                            $("#message").html("sending...");
-                        },
-                        success: function(data) {
-                            $("#message").hide();
-                            $("#response").html(data);
-                        }
-                    });
-                });
-            });
-        </script>
     </div>
     {% endif %}
     <noscript>Please enable JavaScript to check-in</noscript>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(function() {
+            $("#submit-button").click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "/progress/update",
+                    type: 'POST',
+                    data: $("#progress-form").serialize(),
+                    beforeSend: function() {
+                        $("#message").html("sending...");
+                    },
+                    success: function(data) {
+                        $("#message").hide();
+                        $("#response").html(data);
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

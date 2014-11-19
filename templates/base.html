@@ -20,10 +20,6 @@
     {% block css %}{% endblock %}
     {{ stylesheet(url_for('static', filename='css/style.css')) }}
     {{ stylesheet(url_for('static', filename='css/blog.css')) }}
-
-    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js") }}
-    {{ javascript("//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js") }}
-    {% block scripts %}{% endblock %}
 </head>
 <body>
 {% block header %}{% endblock %}
@@ -36,5 +32,8 @@
     <a href="https://www.python.org/"><img src="{{ url_for('static', filename='img/python-powered.jpg') }}"/></a>
     <a href="https://github.com/Ignotus/bookclub"><img src="{{ url_for('static', filename='img/github.jpg') }}"/></a>
 </center>
+    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js") }}
+    {{ javascript("//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js") }}
+    {% block scripts %}{% endblock %}
 </body>
 </html>

@@ -7,11 +7,6 @@
     {{ stylesheet("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/css/bootstrap-markdown.min.css") }}
     {{ stylesheet("//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css") }}
 {% endblock %}
-{% block scripts %}
-    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/to-markdown.js")}}
-    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/markdown.js") }}
-    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
-{% endblock %}
 {% block body %}
     <div class="page-header">
         <h1>{{book.book_author}} - {{ book.book_name }} | Сторінка обговорення</h1>
@@ -40,19 +35,24 @@
             <div class="md-preview"></div>
         <div>
 
-        <script>
-            $("textarea#comment").markdown({
-                resize:'vertical',
-                iconlibrary:'fa',
-                hiddenButtons: ['Preview', 'Code'],
-                onShow: function(e){
-                    $(".md-preview").html(e.parseContent())
-                },
-                onChange: function(e) {
-                    $(".md-preview").html(e.parseContent())
-                }})
-        </script>
-
         <button type="submit" id="submit-button" class="btn btn-primary">Додати</button>
     </form>
+{% endblock %}
+{% block scripts %}
+    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/to-markdown.js")}}
+    {{ javascript("https://toopay.github.io/bootstrap-markdown/js/markdown.js") }}
+    {{ javascript("//cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.7.0/js/bootstrap-markdown.min.js") }}
+
+    <script>
+        $("textarea#comment").markdown({
+            resize:'vertical',
+            iconlibrary:'fa',
+            hiddenButtons: ['Preview', 'Code'],
+            onShow: function(e){
+                $(".md-preview").html(e.parseContent())
+            },
+            onChange: function(e) {
+                $(".md-preview").html(e.parseContent())
+            }})
+    </script>
 {% endblock %}
