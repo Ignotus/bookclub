@@ -17,9 +17,9 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/ua.png') }}" />
 
     {{ stylesheet("//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css") }}
+    {% block css %}{% endblock %}
     {{ stylesheet(url_for('static', filename='css/style.css')) }}
     {{ stylesheet(url_for('static', filename='css/blog.css')) }}
-    {% block css %}{% endblock %}
 
     {{ javascript("//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js") }}
     {{ javascript("//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js") }}
@@ -32,7 +32,6 @@
     {% block body %}{% endblock %}
     </div>
 </div>
-{{ stylesheet(url_for('static', filename='css/style.css')) }}
 <center style="margin-top:20px">
     <a href="https://www.python.org/"><img src="{{ url_for('static', filename='img/python-powered.jpg') }}"/></a>
     <a href="https://github.com/Ignotus/bookclub"><img src="{{ url_for('static', filename='img/github.jpg') }}"/></a>
