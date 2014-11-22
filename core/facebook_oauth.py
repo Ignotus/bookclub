@@ -1,7 +1,7 @@
 from flask import session
-from flask_oauth import OAuth
+from flask_oauthlib.client import OAuth
 
-from config import FACEBOOK_APP_ID, FACEBOOK_APP_SECRET
+from .config import FACEBOOK_APP_ID, FACEBOOK_APP_SECRET
 
 oauth = OAuth()
 

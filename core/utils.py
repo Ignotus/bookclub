@@ -1,5 +1,5 @@
-from tables import Common, Books
-from db import db
+from .tables import Common, Books
+from .db import db
 
 
 def get_current_book():

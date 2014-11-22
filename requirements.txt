@@ -1,11 +1,11 @@
 Flask
 Flask-Login
-Flask-OAuth
+Flask-OAuthlib
 Flask-SQLAlchemy
 Flask-WTF
-mysql-python
 Flask-Markdown
-gunicorn
 Flask-Assets
+CyMySQL
+gunicorn
 cssmin
 jsmin

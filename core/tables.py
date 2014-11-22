@@ -1,4 +1,4 @@
-from db import db
+from .db import db
 
 from flask_sqlalchemy import Model
 from sqlalchemy import Integer, String, Column, DateTime
@@ -101,7 +101,7 @@ class User(db.Model):
         return False
 
     def get_id(self):
-        return unicode(self.id)
+        return str(self.id)
 
 
 class Blog(db.Model):
