@@ -3,12 +3,9 @@ from flask_login import LoginManager, current_user
 from flaskext.markdown import Markdown
 from flask_assets import Environment, Bundle
 
-from routes.auth import auth
-from routes.blog import blog
-from routes.progress import progress
-from routes.home import home
-from routes.calendar import calendar
-from routes.books import books
+route_modules = ['auth', 'blog', 'progress', 'home', 'calendar', 'books']
+for module in route_modules:
+    exec('from routes.%s import %s' % (module, module))
 
 from core.config import *
 from core.db import db
