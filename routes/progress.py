@@ -1,4 +1,5 @@
 import datetime
+import sys
 
 from flask import render_template, Blueprint
 from flask_login import current_user, login_required
@@ -44,26 +45,25 @@ def progress_update():
 def progress_book_handler(id):
     book = db.session.query(Books).filter_by(id=id).first()
     progress_data = []
-    if book is None:
+    if not book:
         return render_template("plain_data.html", progress_data=progress_data)
 
-    for user in User.query.all():
-        progress_data_element = dict(key=user.first_name)
-        progress_data_element["values"] = []
+    users = {user.id : user.first_name for user in User.query.all()}
+    progress_per_user = {user_id : [] for user_id in users}
 
-        for prog in Progress.query.filter_by(book_id=book.id, user_id=user.id).all():
-            progress_data_element["values"] += [[int(1000 * (prog.timestamp - datetime.datetime(1970, 1, 1)).total_seconds()),
-                                                 prog.progress]]
+    world_creation = datetime.datetime(1970, 1, 1)
 
-        if len(progress_data_element["values"]) != 0:
-            progress_data += [progress_data_element]
+    min_date = sys.maxint
+    for progress in Progress.query.filter_by(book_id=book.id).all():
+        timestamp = int(1000 * (progress.timestamp - world_creation).total_seconds())
+        progress_per_user[progress.user_id] += [[timestamp, progress.progress]]
+        min_date = min(min_date, timestamp - 1000 * 24 * 60 * 60)
 
-    try:
-        min_date = min(progress_data, key=lambda p: p["values"][0])["values"][0][0] - 1000 * 24 * 60 * 60
-    except ValueError:
-        pass
-
-    for data in progress_data:
-        data["values"] = [[min_date, 0]] + data["values"]
+    if min_date == sys.maxint:
+        progress_data = []
+    else:
+        progress_data = [{"key": users[id],
+                          "values": [[min_date, 0]] + progress_per_user[id]}
+                         for id in users]
 
     return render_template("plain_data.html", data=progress_data)

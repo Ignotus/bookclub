@@ -19,11 +19,7 @@ def main():
 
     form = ProgressForm()
     form.id.data = current_book.id
-
-    if last_progress_info:
-        form.progress.data = last_progress_info.progress
-    else:
-        form.progress.data = 0
+    form.progress.data = last_progress_info.progress if last_progress_info else 0
 
     return render_template("home/home.html",
                            current_book=current_book,
