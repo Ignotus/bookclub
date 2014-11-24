@@ -30,6 +30,10 @@
   stroke-width: 1.5px;
 }
 
+rect.nv-indexLine {
+  display: none;
+}
+
 
 /* Markdown editor */
 
