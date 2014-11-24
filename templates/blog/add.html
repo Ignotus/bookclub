@@ -40,6 +40,9 @@
     {% endassets %}
 
     <script>
+        $("input#tags").tagsinput({
+            tagClass: 'label label-primary'
+        });
         $("textarea#content").markdown({
             resize:"vertical",
             iconlibrary:"fa",
