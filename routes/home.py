@@ -6,10 +6,10 @@ from core.tables import Progress
 from core.forms import ProgressForm
 from core.db import db
 
-home = Blueprint('home', __name__, url_prefix='/home')
+home = Blueprint("home", __name__, url_prefix="/home")
 
 
-@home.route('/')
+@home.route("/")
 @login_required
 def main():
     current_book = get_current_book()
@@ -25,6 +25,6 @@ def main():
     else:
         form.progress.data = 0
 
-    return render_template('home/home.html',
+    return render_template("home/home.html",
                            current_book=current_book,
                            form=form)

@@ -6,25 +6,25 @@ from flask_wtf.html5 import URLField
 
 
 class PasswordForm(Form):
-    password = PasswordField('password', validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
 
 
 class BlogPost(Form):
-    id = HiddenField('id')
-    topic = StringField('topic', validators=[DataRequired()])
-    content = TextAreaField('content', validators=[DataRequired()])
-    tags = StringField('tags', validators=[DataRequired()])
+    id = HiddenField("id")
+    topic = StringField("topic", validators=[DataRequired()])
+    content = TextAreaField("content", validators=[DataRequired()])
+    tags = StringField("tags", validators=[DataRequired()])
 
 
 class ProgressForm(Form):
-    id = HiddenField('id')
-    progress = IntegerField('name', validators=[DataRequired(), NumberRange(0, 100)])
+    id = HiddenField("id")
+    progress = IntegerField("name", validators=[DataRequired(), NumberRange(0, 100)])
 
 
 class BookInfoForm(Form):
-    id = HiddenField('id')
-    author = StringField('author', validators=[DataRequired()])
-    name = StringField('name', validators=[DataRequired()])
+    id = HiddenField("id")
+    author = StringField("author", validators=[DataRequired()])
+    name = StringField("name", validators=[DataRequired()])
     img = URLField(validators=[url()])
     url = URLField(validators=[url()])
     description = TextAreaField(validators=[DataRequired()])

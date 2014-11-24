@@ -14,14 +14,14 @@
     <form class="form" method="POST" id="add-post" role="form">
         {{ form.hidden_tag() }}
 
-        {{ form_item(form.topic(class_='form-control', placeholder='Топік'), "Заголовок") }}
-        {{ form_item(form.content(placeholder='Багато букафф'), "Текст") }}
+        {{ form_item(form.topic(class_="form-control", placeholder="Топік"), "Заголовок") }}
+        {{ form_item(form.content(placeholder="Багато букафф"), "Текст") }}
 
         <div class="form-group">
             <div class="md-preview"></div>
         <div>
 
-        {{ form_item(form.tags(class_='form-control', placeholder='сюди введіть теги', **{'data-role':'tagsinput'}), "Теги") }}
+        {{ form_item(form.tags(class_="form-control", placeholder="сюди введіть теги", **{"data-role":"tagsinput"}), "Теги") }}
 
         <button type="submit" id="submit-button" class="btn btn-primary">Відновити</button>
 
@@ -41,9 +41,9 @@
 
     <script>
         $("textarea#content").markdown({
-            resize:'vertical',
-            iconlibrary:'fa',
-            hiddenButtons: ['Preview', 'Code'],
+            resize:"vertical",
+            iconlibrary:"fa",
+            hiddenButtons: ["Preview", "Code"],
             onShow: function(e){
                 $(".md-preview").html(e.parseContent())
             },
@@ -57,7 +57,7 @@
                 e.preventDefault();
                 $.ajax({
                     url: "/blog/update",
-                    type: 'POST',
+                    type: "POST",
                     data: $("#add-post").serialize(),
                     beforeSend: function() {
                         $("#message").html("sending...");

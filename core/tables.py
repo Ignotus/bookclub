@@ -5,7 +5,7 @@ from sqlalchemy import Integer, String, Column, DateTime
 
 
 class Books(db.Model):
-    __tablename__ = 'books'
+    __tablename__ = "books"
     id = Column(Integer, primary_key=True)
     book_name = Column(String, unique=True)
     book_author = Column(String)
@@ -24,7 +24,7 @@ class Books(db.Model):
 
 
 class Comments(db.Model):
-    __tablename__ = 'comments'
+    __tablename__ = "comments"
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime)
     book_id = Column(Integer)
@@ -40,7 +40,7 @@ class Comments(db.Model):
 
 # It's a view
 class CommentsDetailed(db.Model):
-    __tablename__ = 'comments_detailed'
+    __tablename__ = "comments_detailed"
 
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime)
@@ -51,7 +51,7 @@ class CommentsDetailed(db.Model):
 
 
 class Common(db.Model):
-    __tablename__ = 'common'
+    __tablename__ = "common"
     id = Column(Integer, primary_key=True)
     key = Column(String, unique=True)
     value = Column(String)
@@ -62,7 +62,7 @@ class Common(db.Model):
 
 
 class Progress(db.Model):
-    __tablename__ = 'progress'
+    __tablename__ = "progress"
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime)
     book_id = Column(Integer)
@@ -77,7 +77,7 @@ class Progress(db.Model):
 
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
     first_name = Column(String)
@@ -105,7 +105,7 @@ class User(db.Model):
 
 
 class Blog(db.Model):
-    __tablename__ = 'blog'
+    __tablename__ = "blog"
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime)
     last_update = Column(DateTime)
@@ -125,7 +125,7 @@ class Blog(db.Model):
 
 # It's a view
 class BlogDetailed(db.Model):
-    __tablename__ = 'blog_detailed'
+    __tablename__ = "blog_detailed"
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime)
     last_update = Column(DateTime)
@@ -137,7 +137,7 @@ class BlogDetailed(db.Model):
 
 
 class Tags(db.Model):
-    __tablename__ = 'tags'
+    __tablename__ = "tags"
     id = Column(Integer, primary_key=True)
     blog_id = Column(Integer)
     tag = Column(String)

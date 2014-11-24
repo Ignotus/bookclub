@@ -8,22 +8,22 @@ from core.tables import Progress, Books, User
 from core.forms import ProgressForm
 from core.db import db
 
-progress = Blueprint('progress', __name__, url_prefix='/progress')
+progress = Blueprint("progress", __name__, url_prefix="/progress")
 
 
-@progress.route('/')
+@progress.route("/")
 @login_required
 def progress_graph():
-    return render_template('progress/progress.html', book=get_current_book())
+    return render_template("progress/progress.html", book=get_current_book())
 
 
-@progress.route('/book/<int:id>')
+@progress.route("/book/<int:id>")
 @login_required
 def progress_data_handler(id):
-    return render_template('progress/progress.html', book=db.session.query(Books).filter_by(id=id).first())
+    return render_template("progress/progress.html", book=db.session.query(Books).filter_by(id=id).first())
 
 
-@progress.route('/update', methods=['POST'])
+@progress.route("/update", methods=["POST"])
 @login_required
 def progress_update():
     form = ProgressForm()
@@ -39,13 +39,13 @@ def progress_update():
     return "Something wrong"
 
 
-@progress.route('/data/<int:id>')
+@progress.route("/data/<int:id>")
 @login_required
 def progress_book_handler(id):
     book = db.session.query(Books).filter_by(id=id).first()
     progress_data = []
     if book is None:
-        return render_template('plain_data.html', progress_data=progress_data)
+        return render_template("plain_data.html", progress_data=progress_data)
 
     for user in User.query.all():
         progress_data_element = dict(key=user.first_name)
@@ -66,4 +66,4 @@ def progress_book_handler(id):
     for data in progress_data:
         data["values"] = [[min_date, 0]] + data["values"]
 
-    return render_template('plain_data.html', data=progress_data)
+    return render_template("plain_data.html", data=progress_data)

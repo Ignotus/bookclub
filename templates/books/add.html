@@ -11,11 +11,11 @@
     <form class="form" method="POST" id="add-book" role="form">
         {{ form.hidden_tag() }}
 
-        {{ form_item(form.author(class_='form-control', placeholder='Автор книги'), 'Автор книги') }}
-        {{ form_item(form.name(class_='form-control', placeholder='Назва книги'), 'Назва книги') }}
-        {{ form_item(form.img(class_='form-control', placeholder='URL на картинку для залучення уваги :)'), 'URL на картинку для залучення уваги :)') }}
-        {{ form_item(form.url(class_='form-control', placeholder='URL на додаткову інформацію'), 'URL на додаткову інформацію') }}
-        {{ form_item(form.description(placeholder='Опис книги'), 'Опис книги') }}
+        {{ form_item(form.author(class_="form-control", placeholder="Автор книги"), "Автор книги") }}
+        {{ form_item(form.name(class_="form-control", placeholder="Назва книги"), "Назва книги") }}
+        {{ form_item(form.img(class_="form-control", placeholder="URL на картинку для залучення уваги :)"), "URL на картинку для залучення уваги :)") }}
+        {{ form_item(form.url(class_="form-control", placeholder="URL на додаткову інформацію"), "URL на додаткову інформацію") }}
+        {{ form_item(form.description(placeholder="Опис книги"), "Опис книги") }}
 
         <div class="form-group">
             <div class="md-preview"></div>
@@ -37,9 +37,9 @@
 
         <script>
         $("textarea#description").markdown({
-            resize:'vertical',
-            iconlibrary:'fa',
-            hiddenButtons: ['Preview', 'Code'],
+            resize:"vertical",
+            iconlibrary:"fa",
+            hiddenButtons: ["Preview", "Code"],
             onShow: function(e){
                 $(".md-preview").html(e.parseContent())
             },
@@ -52,7 +52,7 @@
                 e.preventDefault();
                 $.ajax({
                     url: "/books/update",
-                    type: 'POST',
+                    type: "POST",
                     data: $("#add-book").serialize(),
                     beforeSend: function() {
                         $("#message").html("sending...");

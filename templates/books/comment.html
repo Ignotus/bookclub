@@ -28,7 +28,7 @@
     <form class="form" method="POST" id="add-book" role="form" action="/books/{{ book.id }}/comment/submit">
         <div class="form-group">
             {{ comment_form.hidden_tag() }}
-            {{ comment_form.comment(rows='5', placeholder='Комент') }}
+            {{ comment_form.comment(rows="5", placeholder="Комент") }}
         </div>
 
         <div class="form-group">
@@ -46,9 +46,9 @@
 
     <script>
         $("textarea#comment").markdown({
-            resize:'vertical',
-            iconlibrary:'fa',
-            hiddenButtons: ['Preview', 'Code'],
+            resize:"vertical",
+            iconlibrary:"fa",
+            hiddenButtons: ["Preview", "Code"],
             onShow: function(e){
                 $(".md-preview").html(e.parseContent())
             },

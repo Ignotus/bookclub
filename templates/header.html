@@ -1,9 +1,9 @@
 {% set navigation_bar = [
-    ('/home', 'home', 'Хоум'),
-    ('/blog', 'blog', 'Блог'),
-    ('/progress', 'progress', 'Прогрес'),
-    ('/books', 'books', 'Ліба'),
-    ('/calendar', 'calendar', 'Зустрічі')
+    ("/home", "home", "Хоум"),
+    ("/blog", "blog", "Блог"),
+    ("/progress", "progress", "Прогрес"),
+    ("/books", "books", "Ліба"),
+    ("/calendar", "calendar", "Зустрічі")
 ] -%}
 <div class="blog-masthead">
     <div class="container">
@@ -11,11 +11,11 @@
         <span class="blog-nav-item"><b>Exclusive Book Club</b></span>
         {% for href, id, caption in navigation_bar %}
         {% if id == active_page %}
-            <a class='blog-nav-item active' href="{{ href }}" id="{{ id }}">
+            <a class="blog-nav-item active" href="{{ href }}" id="{{ id }}">
                 {{ caption }}
             </a>
         {% else %}
-            <a class='blog-nav-item' href="{{ href }}" id="{{ id }}">
+            <a class="blog-nav-item" href="{{ href }}" id="{{ id }}">
                 {{ caption }}
             </a>
         {% endif %}
