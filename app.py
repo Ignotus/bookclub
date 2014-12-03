@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, current_user
 from flaskext.markdown import Markdown
 from flask_assets import Environment, Bundle
@@ -32,6 +32,10 @@ def load_user(userid):
 
 app.debug = DEBUG
 app.secret_key = SECRET_KEY
+
+@app.before_request
+def before_request():
+    app.config["SERVER_NAME"] = request.host
 
 @app.route("/")
 def main():
@@ -68,4 +72,4 @@ assets.register("css_tagsinput", css_tagsinput)
 assets.register("js_tagsinput", js_tagsinput)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=PORT)
+    app.run(port=PORT)

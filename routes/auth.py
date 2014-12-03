@@ -22,7 +22,8 @@ def logout():
 def login():
     form = PasswordForm()
     if form.validate_on_submit() and form.password.data == PASSWORD:
-        return facebook.authorize(callback=PROTOCOL + "://" + HOST + "/auth/authorized?next=%2Fblog")
+        return facebook.authorize(callback=url_for("auth.facebook_authorized", _external=True,
+                                                   _scheme=request.scheme, next=form.next.data))
     else:
         return render_template("error.html", msg="Where are you from, dude? Your password isn't correct")
 
@@ -34,8 +35,9 @@ def authorization_main():
         return redirect(next_url)
 
     form = PasswordForm()
+    form.next.data = next_url
 
-    return render_template("auth/main.html", next=next_url, login_form=form)
+    return render_template("auth/main.html", login_form=form)
 
 
 @auth.route("/authorized")

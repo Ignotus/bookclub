@@ -6,6 +6,7 @@ from flask_wtf.html5 import URLField
 
 
 class PasswordForm(Form):
+    next = HiddenField("next", validators=[DataRequired()])
     password = PasswordField("password", validators=[DataRequired()])
 
 
