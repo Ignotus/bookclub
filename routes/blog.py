@@ -1,6 +1,8 @@
 import re
 import datetime
 
+from sqlalchemy import desc
+
 from core.tables import BlogDetailed, Blog, Tags
 from core.db import db
 from core.forms import BlogPost
@@ -14,7 +16,7 @@ blog = Blueprint("blog", __name__, url_prefix="/blog")
 
 @blog.route("/")
 def blog_main():
-    posts = db.session.query(BlogDetailed).all()
+    posts = db.session.query(BlogDetailed).order_by(desc(BlogDetailed.id)).all()
     return render_template("blog/main.html", posts=posts)
 
 
@@ -96,7 +98,7 @@ def blog_add():
 def blog_filter_by_tag(tag):
     posts_with_tags = db.session.query(Tags).filter_by(tag=tag).all()
 
-    post_ids = [post.blog_id for post in posts_with_tags]
+    post_ids = [post.blog_id for post in posts_with_tags][::-1]
 
     posts = [db.session.query(BlogDetailed).filter_by(id=id).first() for id in post_ids]
 

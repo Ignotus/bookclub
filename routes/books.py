@@ -1,5 +1,7 @@
 import datetime
 
+from sqlalchemy import desc
+
 from core.db import db
 from core.forms import BookInfoForm, CommentForm
 from core.tables import Books, Common, Comments, CommentsDetailed
@@ -14,7 +16,7 @@ books = Blueprint("books", __name__, url_prefix="/books")
 @books.route("/")
 @login_required
 def main():
-    books_info = db.session.query(Books).all()
+    books_info = db.session.query(Books).order_by(desc(Books.id)).all()
     return render_template("books/main.html", books=books_info)
 
 
