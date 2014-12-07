@@ -7,6 +7,9 @@ from .config import PAGE_SIZE
 def get_page_info(sql_request):
     page = 1 if 'page' not in request.args else int(request.args.get('page'))
     item_count = sql_request.count()
+    if item_count == 0:
+      return ([], 1, 1)
+    
     max_page = item_count / PAGE_SIZE
     if item_count % PAGE_SIZE != 0:
       max_page += 1
