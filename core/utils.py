@@ -1,5 +1,22 @@
+from flask import request
+
 from .tables import Common, Books
 from .db import db
+from .config import PAGE_SIZE
+
+def get_page_info(sql_request):
+    page = 1 if 'page' not in request.args else int(request.args.get('page'))
+    item_count = sql_request.count()
+    max_page = item_count / PAGE_SIZE
+    if item_count % PAGE_SIZE != 0:
+      max_page += 1
+      
+    if page < 0:
+      page = 0
+    elif page > max_page:
+      page = max_page
+      
+    return (sql_request.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).all(), page, max_page)
 
 
 def get_current_book():

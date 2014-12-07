@@ -58,3 +58,4 @@ core/config.py
 .idea
 static/gen
 static/.webassets-cache
+*.kdev4

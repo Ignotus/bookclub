@@ -6,6 +6,7 @@ from sqlalchemy import desc
 from core.tables import BlogDetailed, Blog, Tags
 from core.db import db
 from core.forms import BlogPost
+from core.utils import get_page_info
 
 from flask import render_template, Blueprint
 from flask_login import current_user, login_required
@@ -14,10 +15,13 @@ from flask_login import current_user, login_required
 blog = Blueprint("blog", __name__, url_prefix="/blog")
 
 
-@blog.route("/")
+@blog.route("/", methods=["GET"])
 def blog_main():
-    posts = db.session.query(BlogDetailed).order_by(desc(BlogDetailed.id)).all()
-    return render_template("blog/main.html", posts=posts)
+    all_posts_request = db.session.query(BlogDetailed).order_by(desc(BlogDetailed.id))
+    
+    posts, page, max_page = get_page_info(all_posts_request)
+    
+    return render_template("blog/main.html", posts=posts, current_page=page, max_page=max_page)
 
 
 @blog.route("/update", methods=["POST"])

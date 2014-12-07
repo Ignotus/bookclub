@@ -19,4 +19,5 @@
         <div class="panel-footer"><a href="/books/{{ book.id }}/edit">Виправити</a><!-- | <a href="/books/{{ book.id }}/delete">Видалити</a> --> | <a href="/progress/book/{{ book.id }}">Прогрес по книзі</a> | <a href="/books/{{ book.id }}/comment">Коментувати [{{ book.comment_count }}]</a>  | <a href="/books/{{ book.id }}/read">Читати зараз цю книгу</a></div>
     </div>
     {% endfor %}
+    {% include "pager.html" %}
 {% endblock %}

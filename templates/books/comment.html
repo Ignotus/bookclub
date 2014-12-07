@@ -24,7 +24,7 @@
         </div>
     </div>
     {% endfor %}
-
+    {% include "pager.html" %}
     <form class="form" method="POST" id="add-book" role="form" action="/books/{{ book.id }}/comment/submit">
         <div class="form-group">
             {{ comment_form.hidden_tag() }}

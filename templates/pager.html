@@ -1,0 +1,10 @@
+<nav>
+    <ul class="pager">
+    {% if current_page < max_page %}
+        <li class="previous"><a href="?page={{ current_page + 1 }}"><span aria-hidden="true">&larr;</span> Older</a></li>
+    {% endif %}
+    {% if current_page > 1 %}
+      <li class="next"><a href="?page={{ current_page - 1 }}">Newer <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+    </ul>
+</nav>

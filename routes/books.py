@@ -5,6 +5,7 @@ from sqlalchemy import desc
 from core.db import db
 from core.forms import BookInfoForm, CommentForm
 from core.tables import Books, Common, Comments, CommentsDetailed
+from core.utils import get_page_info
 
 from flask import render_template, Blueprint, redirect, url_for, request
 from flask_login import current_user, login_required
@@ -13,11 +14,12 @@ from flask_login import current_user, login_required
 books = Blueprint("books", __name__, url_prefix="/books")
 
 
-@books.route("/")
+@books.route("/", methods=["GET"])
 @login_required
 def main():
-    books_info = db.session.query(Books).order_by(desc(Books.id)).all()
-    return render_template("books/main.html", books=books_info)
+    books_info_request = db.session.query(Books).order_by(desc(Books.id))
+    books_info, page, max_page = get_page_info(books_info_request)
+    return render_template("books/main.html", books=books_info, current_page=page, max_page=max_page)
 
 
 @books.route("/<int:id>/read")
@@ -78,15 +80,17 @@ def comment_submit(id):
     return redirect(url_for("books.books_comment", id=id))
 
 
-@books.route("/<int:id>/comment")
+@books.route("/<int:id>/comment", methods=["GET"])
 @login_required
 def books_comment(id):
     book = Books.query.filter_by(id=id).first()
-    comments = CommentsDetailed.query.filter_by(book_id=id).all()
+    comments_request = CommentsDetailed.query.filter_by(book_id=id).order_by(desc(CommentsDetailed.id))
+    comments, page, max_page = get_page_info(comments_request)
 
     comment_form = CommentForm()
 
-    return render_template("books/comment.html", comment_data=comments, book=book, comment_form=comment_form)
+    return render_template("books/comment.html", comment_data=comments, book=book,
+                           comment_form=comment_form, current_page=page, max_page=max_page)
 
 
 @books.route("/update", methods=["POST"])

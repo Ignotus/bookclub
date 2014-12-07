@@ -48,7 +48,7 @@ create view comments_detailed(id,
                               comment
                               )
   AS SELECT comments.id, comments.timestamp, comments.book_id,
-            users.first_name, users.last_name, comments.comment FROM comments, users;
+            users.first_name, users.last_name, comments.comment FROM comments INNER JOIN users ON comments.user_id=users.id;
 
 create table blog(id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
                   timestamp DATETIME NOT NULL,
@@ -72,7 +72,7 @@ create view blog_detailed(id,
                           )
   AS SELECT blog.id, blog.timestamp, blog.last_update,
             users.first_name, users.last_name,
-            blog.topic, blog.content, blog.tags FROM blog, users;
+            blog.topic, blog.content, blog.tags FROM blog INNER JOIN users ON blog.user_id=users.id;
 
 create table tags(id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
                   blog_id INTEGER NOT NULL,
