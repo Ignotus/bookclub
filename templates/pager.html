@@ -1,3 +1,4 @@
+{% if current_page is defined %}
 <nav>
     <ul class="pager">
     {% if current_page < max_page %}
@@ -8,3 +9,4 @@
     {% endif %}
     </ul>
 </nav>
+{% endif %}
