@@ -98,12 +98,14 @@ def blog_add():
     return render_template("blog/add.html", form=BlogPost())
 
 
-@blog.route("/filter/tag/<tag>")
+@blog.route("/filter/tag/<tag>", methods=["GET"])
 def blog_filter_by_tag(tag):
-    posts_with_tags = db.session.query(Tags).filter_by(tag=tag).all()
+    posts_with_tags = db.session.query(Tags).filter_by(tag=tag)
 
-    post_ids = [post.blog_id for post in posts_with_tags][::-1]
+    posts_request = db.session.query(BlogDetailed)\
+        .filter_by(id=posts_with_tags.subquery().columns.blog_id)\
+        .order_by(desc(BlogDetailed.id))
 
-    posts = [db.session.query(BlogDetailed).filter_by(id=id).first() for id in post_ids]
-
-    return render_template("blog/main.html", posts=posts)
+    posts, page, max_page = get_page_info(posts_request)
+    
+    return render_template("blog/main.html", posts=posts, current_page=page, max_page=max_page)
