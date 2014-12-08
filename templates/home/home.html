@@ -22,7 +22,7 @@
     <div class="row starter-template">
         <div id="message"></div>
         <form class="form-inline" method="POST" id="progress-form" role="form">
-            <h1>Я прочитав
+            <h1>Я {% if current_user.id == 1 %}прочитав{% else %}прочитала{% endif %}
                 <div class="input-group">
                     {{ form.hidden_tag() }}
                     {{ form.progress(class_="form-control", min="0", max="100", style="width:70px") }}
