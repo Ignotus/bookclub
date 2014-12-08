@@ -8,7 +8,7 @@
 <div class="blog-masthead">
     <div class="container">
         <nav class="blog-nav">
-        <span class="blog-nav-item"><b>Exclusive Book Club</b></span>
+        <span class="blog-nav-item"><img height=18 width=18 src="{{ url_for('static', filename='img/fear_santaclaus.png') }}"/><b>Exclusive Book Club</b></span>
         {% for href, id, caption in navigation_bar %}
         {% if id == active_page %}
             <a class="blog-nav-item active" href="{{ href }}" id="{{ id }}">

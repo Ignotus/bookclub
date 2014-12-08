@@ -19,7 +19,7 @@ class BlogPost(Form):
 
 class ProgressForm(Form):
     id = HiddenField("id")
-    progress = IntegerField("name", validators=[DataRequired(), NumberRange(0, 100)])
+    progress = IntegerField("name", validators=[NumberRange(min=0, max=100)])
 
 
 class BookInfoForm(Form):
