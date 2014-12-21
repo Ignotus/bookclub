@@ -53,13 +53,13 @@ def progress_book_handler(id):
 
     world_creation = datetime.datetime(1970, 1, 1)
 
-    min_date = sys.maxint
+    min_date = sys.maxsize
     for progress in Progress.query.filter_by(book_id=book.id).all():
         timestamp = int(1000 * (progress.timestamp - world_creation).total_seconds())
         progress_per_user[progress.user_id] += [[timestamp, progress.progress]]
         min_date = min(min_date, timestamp - 1000 * 24 * 60 * 60)
 
-    if min_date == sys.maxint:
+    if min_date == sys.maxsize:
         progress_data = []
     else:
         progress_data = [{"key": users[id],

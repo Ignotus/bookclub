@@ -1,5 +1,5 @@
 create table users(id serial not null primary key,
-                   email varchar(50),
+                   email varchar(50) unique,
                    first_name varchar(50) not null,
                    last_name varchar(50) not null
                   );
@@ -14,7 +14,7 @@ create table books(id serial not null primary key,
                   );
 
 create table common(id serial not null primary key,
-                    "key" varchar(50) not null,
+                    "key" varchar(50) not null unique,
                     value varchar(50) not null
                    );
 

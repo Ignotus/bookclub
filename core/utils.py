@@ -10,7 +10,7 @@ def get_page_info(sql_request):
     if item_count == 0:
       return ([], 1, 1)
     
-    max_page = item_count / PAGE_SIZE
+    max_page = int(item_count / PAGE_SIZE)
     if item_count % PAGE_SIZE != 0:
       max_page += 1
       

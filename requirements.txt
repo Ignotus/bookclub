@@ -5,7 +5,7 @@ Flask-SQLAlchemy
 Flask-WTF
 Flask-Markdown
 Flask-Assets
-CyMySQL
 gunicorn
 cssmin
 jsmin
+psycopg2

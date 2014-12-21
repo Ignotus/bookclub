@@ -13,7 +13,7 @@ from core.tables import User
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+cymysql://" + DB_USER + ":" + DB_PASSWORD + "@" + DB_HOST + "/" + DB
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://" + DB_USER + ":" + DB_PASSWORD + "@" + DB_HOST + "/" + DB
 
 db.init_app(app)
 
